@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OXYFIT</title>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const categoryForm = document.getElementById('categoryForm');
+            const categoriesList = document.getElementById('categoriesList');
+
+            // Handle adding categories
+            categoryForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = categoryForm.querySelector('input');
+                const newCategory = input.value;
+
+                if (newCategory) {
+                    const categoryItem = document.createElement('div');
+                    categoryItem.className = 'flex justify-between items-center py-2 border-b border-gray-200';
+                    categoryItem.innerHTML = `<span>${newCategory}</span>
+                                              <button class="text-red-500 hover:underline" onclick="removeCategory(this)">Remove</button>`;
+                    categoriesList.appendChild(categoryItem);
+                    input.value = ''; // Clear input
+                }
+            });
+        });
+
+        // Function to remove category
+        function removeCategory(button) {
+            button.parentElement.remove();
+        }
+    </script>
+</head>
+<body>
+    <div id="adminPage" class="">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <div class="flex items-center justify-between mb-8">
+                <h1 class="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+                <div class="flex items-center space-x-2">
+                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Admin</span>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Categories Management -->
+                <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                    <h2 class="text-xl font-semibold mb-6 text-gray-800">Categories Management</h2>
+                    <form id="categoryForm" class="mb-6">
+                        <div class="flex gap-3">
+                            <input 
+                                type="text" 
+                                placeholder="Add new category..." 
+                                class="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
+                                required
+                            >
+                            <button 
+                                type="submit"
+                                class="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 font-medium"
+                            >
+                                Add
+                            </button>
+                        </div>
+                    </form>
+                    <div id="categoriesList" class="space-y-3 border-t border-gray-100 pt-4"></div>
+                </div>
+
+                <!-- User Management -->
+                <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300">
+                    <h2 class="text-xl font-semibold mb-6 text-gray-800">User Management</h2>
+                    <div id="usersList" class="space-y-4"></div>
+                </div>
+
+                <!-- Article Management -->
+                <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-6 lg:col-span-2 hover:shadow-2xl transition-all duration-300">
+                    <h2 class="text-xl font-semibold mb-6 text-gray-800">Article Management</h2>
+                    <div id="pendingArticles" class="space-y-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>  
+      <script src="https://cdn.tailwindcss.com"></script>
+
+
+</body>
+
+</html>
