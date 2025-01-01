@@ -33,12 +33,12 @@ class Database {
             throw new PDOException($e->getMessage(), (int)$e->getCode());
         }
     }
-
+ 
     public function getConnection() {
         return $this->pdo;
     }
-}
 
+}
 ?>
 
 <!-- MySQL utilise des codes comme :
