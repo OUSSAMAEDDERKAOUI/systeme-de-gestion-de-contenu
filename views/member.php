@@ -1,66 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <title>Articles - CultureConnect</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        ::-webkit-scrollbar {
-            width: 0px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="overflow-y-scroll">
-
-    <!-- Header (assuming a static header) -->
-    <header class="bg-gray-800 text-white p-4">
-        <h1 class="text-lg">Profile Header</h1>
-    </header>
-
-    <h1 class="sr-only">Profile</h1>
-    <div class="max-w-7xl mx-auto px-3 py-10 grid gap-4 grid-cols-[35%_1fr] items-start">
-        <div class="border border-gray-200 rounded-lg px-3 py-7 text-center">
-            <div>
-                <div class="w-16 h-16 rounded-full border-2 border-green-500 bg-gray-300 mx-auto mb-5">
-                    <img src="/assets/imgs/users/default.webp" class="w-full rounded-full" alt="User Image">
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="text-2xl font-bold text-green-600">MelodyHub</a>
+                    </div>
+                    <!-- Desktop Menu -->
+                    
                 </div>
-                <h2 class="text-green-500 font-semibold mb-1 text-xl">First Last Name</h2>
-                <span class="text-gray-500 text-sm">Joined On: January 1, 2023</span>
-                <span class="h-[1px] w-3/6 bg-gray-200 mx-auto block my-5"></span>
-            </div>
-            <div>
-                <h3 class="font-semibold text-lg mb-2">Statistics</h3>
-                <ul>
-                    <li class="mb-1">10 Posts</li>
-                    <li class="mb-1">5 Comments</li>
-                    <li class="mb-1">20 Reactions</li>
-                </ul>
-            </div>
-        </div>
-        <div id="option-blocks">
-            <div class="border border-gray-200 rounded-lg flex-1 py-8 px-8" id="published-posts">
-                <h2 class="text-3xl text-green-500 font-semibold mb-8 text-center">Published Posts</h2>
 
-                <div class="mb-6">
-                    <h3 class="font-semibold text-blue-500 text-lg">
-                        <a href="/view.php?id=1">Sample Post Title 1</a>
-                    </h3>
-                    <span class="text-gray-400 text-md">January 1, 2023</span>
-                    <p class="mt-2">This is a brief content of the post.</p>
-                </div>
-                <div class="mb-6">
-                    <h3 class="font-semibold text-blue-500 text-lg">
-                        <a href="/view.php?id=2">Sample Post Title 2</a>
-                    </h3>
-                    <span class="text-gray-400 text-md">January 2, 2023</span>
-                    <p class="mt-2">This is a brief content of the post.</p>
-                </div>
-                <p class="text-center font-semibold text-md text-gray-600">This user has not published any posts yet.</p>
+                
 
+                <!-- Desktop Auth Buttons -->
+                <div class="flex items-center space-x-4">
+                            <button class="p-2 text-gray-400 hover:text-gray-600">
+                                <i class="fas fa-bell text-xl"></i>
+                            </button>
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" 
+                                     alt="Profile" 
+                                     class="h-10 w-10 rounded-full object-cover">
+                                <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-400 border-2 border-white"></div>
+                            </div>
+                        </div>
             </div>
         </div>
-    </div>
 
+      
+    </nav>
+
+    <main class="container mx-auto px-4 py-8 mt-16 max-w-7xl mx-auto px-4">
+        <!-- Filtres -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Catégories</h2>
+            <div class="category-filters">
+                <button data-category="all" class="category-filter px-4 py-2 rounded-full bg-purple-600 text-white transition-colors duration-300">
+                    Tous
+                </button>
+                <button data-category="Peinture" class="category-filter px-4 py-2 rounded-full bg-white text-purple-600 hover:bg-purple-100 transition-colors duration-300">
+                    Classical
+                </button>
+                <button data-category="Musique" class="category-filter px-4 py-2 rounded-full bg-white text-purple-600 hover:bg-purple-100 transition-colors duration-300">
+                    Pop
+                </button>
+                <button data-category="Littérature" class="category-filter px-4 py-2 rounded-full bg-white text-purple-600 hover:bg-purple-100 transition-colors duration-300">
+                    Rock
+                </button>
+             
+                <button data-category="Théâtre" class="category-filter px-4 py-2 rounded-full bg-white text-purple-600 hover:bg-purple-100 transition-colors duration-300">
+                    Jazz
+                </button>
+            </div>
+        </div>
+
+        <!-- Articles Grid -->
+        <section>
+              
+
+
+               <section class="m-12">
+                <div class="articles-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
+                    <div class="relative">
+                        <img src="../assets/img/photo-1511379938547-c1f69419868d.jpeg" alt="${article.title}" class="w-full h-48 object-cover">
+                        <div class="absolute top-0 right-0 m-2">
+                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">
+                                music
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-600 mb-2">
+                            <span>2024-12-31</span>
+                            <span class="mx-2">•</span>
+                            <span>50 vues</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">La Renaissance de la Musique Classique
+                        </h3>
+                        <p class="text-gray-600 mb-4">Comment la nouvelle génération redécouvre...</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Par Jean Martin </span>
+                            <a href="#" class="text-purple-600 hover:text-purple-800 transition-colors duration-300">
+                                Lire la suite →
+                            </a>
+                        </div>
+                       
+                    </div>
+                </article>             
+               </div>
+
+        <!-- Pagination -->
+        <div class="pagination flex justify-center space-x-2 mt-8">
+            <!-- Les boutons de pagination seront injectés ici par JavaScript -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 mt-12">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="text-white">
+                    <h3 class="text-2xl font-bold">MelodyHub</h3>
+                    <p class="mt-2 text-gray-400">Votre passerelle vers la culture</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-gray-300">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-gray-300">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-gray-300">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
