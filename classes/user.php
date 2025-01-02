@@ -55,7 +55,45 @@ class Users{
     $this->password=password_hash($password,PASSWORD_DEFAULT) ;
    }
   
-   
+   public function login($postEmail , $postPassword){
+
+
+
+
+
+
+    $stmt=$this->database->getConnection()->prepare(" SELECT * FROM users WHERE users.email=:email");
+
+    $stmt->bindParam(':email',$postEmail,PDO::PARAM_STR);
+
+    try {
+      $stmt->execute();
+      $result = $stmt->fetch(PDO::FETCH_ASSOC);
+      
+      if (empty($result)) {
+          throw new Exception('Aucun résultat trouvé.'); 
+      } else {
+        
+          if (password_verify($postPassword, $result['password'])) {
+            $this->id_user = $result['id_user'];
+            $this->nom =$result['nom'];
+            $this->prenom=$result['prenom'];
+            $this->email=$result['email'];
+            $this->role=$result['role'];
+              return $this;
+          }
+      }
+      }
+   catch (PDOException $e) {
+      throw new Exception('Erreur de base de données : ' . $e->getMessage());
+  } catch (Exception $e) {
+      throw new Exception($e->getMessage());
+  }
+    
+
+
+
+   }
     
 }
 

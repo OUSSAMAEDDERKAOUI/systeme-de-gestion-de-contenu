@@ -5,7 +5,7 @@ require_once './user.php';
 class Membre extends Users
 {
 
-    public function signUp($nom, $prenom, $email, $password, $role)
+    public function signup($nom, $prenom, $email, $password, $role)
     {
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
