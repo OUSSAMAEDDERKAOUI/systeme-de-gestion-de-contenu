@@ -26,7 +26,7 @@ public function addCategory($titre,$id_admin){
 }
 
 public function showCategory() {
-    $stmt = $this->database->getConnection()->prepare('SELECT * FROM categorie join users on categorie.id_admin=users.id_user');
+    $stmt = $this->database->getConnection()->prepare("SELECT * FROM categorie join users on categorie.id_admin=users.id_user WHERE categorie.status='confirmee' ");
 
     try {
         $stmt->execute();
@@ -53,8 +53,8 @@ public function showCategory() {
 
 public function updateCategory($titre,$id_categorie,$status){
     $query ="UPDATE `categorie`
-             SET `titre`=':titre',`status`=':status' 
-             WHERE `id_categorie`=':id_categorie'";  
+             SET `titre`=:titre,`status`=:status 
+             WHERE `id_categorie`=:id_categorie";  
     $stmt = $this->database->getConnection()->prepare($query)   ;
 
     $stmt->bindValue(':titre',$titre ,PDO::PARAM_STR) ;  
@@ -69,14 +69,14 @@ public function updateCategory($titre,$id_categorie,$status){
 }
 
 
-public function deleteCategory($id_categorie,$status){
+public function deleteCategory($id_categorie){
     $query ="UPDATE `categorie`
-            SET `statut`='annulee'
-            WHERE id_category=:id_category";  
+            SET `status`= 'annulee'
+            WHERE id_categorie =:id_category";  
     $stmt = $this->database->getConnection()->prepare($query)   ;
-    
-    $stmt->bindValue( ':status' , $status,PDO::PARAM_STR)  ;
+    echo'1';
     $stmt->bindValue( ':id_category' , $id_categorie ,PDO::PARAM_INT)  ;
+    echo'2';
 
     try {
         $stmt->execute();

@@ -91,7 +91,7 @@ if (!isAuth('admin')) {
                                     </svg>
                                 </div>
                                 <div class="ml-4">
-                                    <h3 class="text-gray-500 text-sm">En Attente</h3>
+                                    <h3 class="text-gray-500 text-sm"> Les Articles En Attente</h3>
                                     <?php
                                     require_once '../classes/admin.php';
                                     $admin = new Admin("", "", "", "", "", "");
@@ -115,7 +115,7 @@ if (!isAuth('admin')) {
                                     </svg>
                                 </div>
                                 <div class="ml-4">
-                                    <h3 class="text-gray-500 text-sm">approuvée </h3>
+                                    <h3 class="text-gray-500 text-sm">Les Articles Approuvée </h3>
 
                                     <?php
                                     require_once '../classes/admin.php';
@@ -224,6 +224,7 @@ if (!isAuth('admin')) {
                         $rows = $admin->showCategory();
                         if ($rows) {
                             foreach ($rows as $row) {
+                                $id_category= $row['id_categorie'];
                                 echo '<div class="flex items-center justify-between border-b pb-2">';
                                 echo "<div>
                                     <h4 class='font-medium'>" . $row['titre'] . "</h4>";
@@ -232,7 +233,7 @@ if (!isAuth('admin')) {
                                     </p>
                                 </div>
                                 <div class="flex space-x-2">
-                                <a href="../functions/removeCategory.php">
+                                <a href="../functions/removeCategory.php?id='. htmlspecialchars($id_category) .' ">
                                     <button 
                                         class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
                                         Rejeter
