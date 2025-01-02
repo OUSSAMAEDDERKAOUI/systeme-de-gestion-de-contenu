@@ -8,11 +8,19 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'membre', 'auteur') NOT NULL
 );
+-- CREATE TABLE categorie (
+--     id_categorie INT AUTO_INCREMENT PRIMARY KEY,
+--     titre VARCHAR(255) NOT NULL,
+--     dateCreation DATE NOT NULL,
+--     status ENUM('confirmee', 'annulee') NOT NULL
+-- );
 CREATE TABLE categorie (
     id_categorie INT AUTO_INCREMENT PRIMARY KEY,
     titre VARCHAR(255) NOT NULL,
     dateCreation DATE NOT NULL,
-    status ENUM('confirmee', 'annulee') NOT NULL
+    status ENUM('confirmee', 'annulee') NOT NULL,
+    id_admin INT NOT NULL,
+     FOREIGN KEY (id_admin) REFERENCES users(id_user) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE article (
     id_article INT AUTO_INCREMENT PRIMARY KEY,

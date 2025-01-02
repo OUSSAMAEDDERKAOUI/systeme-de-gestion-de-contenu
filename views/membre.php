@@ -36,9 +36,6 @@ if(!isAuth('membre')){
                     <!-- Desktop Menu -->
                     
                 </div>
-
-                
-
                 <!-- Desktop Auth Buttons -->
                 <div class="flex items-center space-x-4">
                             <button class="p-2 text-gray-400 hover:text-gray-600">

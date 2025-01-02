@@ -17,29 +17,7 @@ class Categorie {
 
    }
 
-   public function showCategory() {
-    $stmt = $this->database->getConnection()->prepare('SELECT * FROM categorie');
-
-    try {
-        $stmt->execute();
-        
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        if (!empty($result)) {
-            return $result;  
-        } else {
-            throw new Exception("Aucun categorie trouvé.");  
-        }
-        
-    } catch (PDOException $e) {
-        echo "Erreur de base de données : " . $e->getMessage();
-        return null; 
-    } catch (Exception $e) {
-
-        echo "Erreur : " . $e->getMessage();
-        return null;  
-    }
-}
+ 
 
 
 

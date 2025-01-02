@@ -70,8 +70,14 @@ if(!isAuth('admin')){
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-gray-500 text-sm">Total Articles</h3>
-                                <p class="text-2xl font-semibold text-gray-800">16</p>
-                            </div>
+                                <?php
+                        require_once '../classes/admin.php';
+                        $admin=new Admin("","","","","","");
+                        $result=$admin->allArticle();
+
+                               echo' <p class="text-2xl font-semibold text-gray-800">'.$result['nbr_article'].'</p>
+                            </div>'
+                            ?>
                         </div>
                     </div>
 
@@ -86,8 +92,15 @@ if(!isAuth('admin')){
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-gray-500 text-sm">En Attente</h3>
-                                <p class="text-2xl font-semibold text-gray-800">8</p>
-                            </div>
+                                <?php
+                        require_once '../classes/admin.php';
+                        $admin=new Admin("","","","","","");
+                        $result=$admin->rejectedArticle();
+
+                               echo' <p class="text-2xl font-semibold text-gray-800">'.$result['nbr_article'].'</p>'
+                            ?>  
+                                               
+                                 </div>
                         </div>
                     </div>
 
@@ -102,9 +115,16 @@ if(!isAuth('admin')){
                                 </svg>
                             </div>
                             <div class="ml-4">
-                                <h3 class="text-gray-500 text-sm">Auteurs</h3>
-                                <p class="text-2xl font-semibold text-gray-800">5</p>
-                            </div>
+                                <h3 class="text-gray-500 text-sm">approuvée </h3>
+                                
+                                <?php
+                        require_once '../classes/admin.php';
+                        $admin=new Admin("","","","","","");
+                        $result=$admin->confirmedArticle();
+
+                               echo' <p class="text-2xl font-semibold text-gray-800">'.$result['nbr_article'].'</p>'
+                            ?>               
+                                           </div>
                         </div>
                     </div>
 
@@ -134,26 +154,41 @@ if(!isAuth('admin')){
                     <div class="bg-white rounded-lg shadow-md p-6">
                         <h3 class="text-lg font-semibold mb-4">Articles en Attente de Validation</h3>
                         <div class="space-y-4">
-                            <div class="flex items-center justify-between border-b pb-2">
+                        <?php
+                        require_once '../classes/admin.php';
+                        $admin=new Admin("","","","","","");
+                        $rows=$admin->show_article();
+                        if($rows){
+                            foreach ($rows as $row){
+                                $id_article = $row['id_article'];
+                           echo' <div class="flex items-center justify-between border-b pb-2">
                                 <div>
-                                    <h4 class="font-medium">La Renaissance de la Musique Classique</h4>
+                                    <h4 class="font-medium">'.$row['titreArticle'].'</h4>
                                     <p class="text-sm text-gray-500">
-                                        Par Jean Martin •
-                                        Classical •
-                                        2024-12-87
+                                      '.$row["prenom"].' '.$row["nom"].'   •   
+                                       '.$row['titreCategorie'].' •
+                                       '.$row['date_publication'].'
+                                        
                                     </p>
-                                </div>
-                                <div class="flex space-x-2">
-                                    <button onclick="approveArticle(<?php echo $article['id']; ?>)"
+                                </div>';
+                                
+                             echo' <div class="flex space-x-2">
+                              <a href="../functions/approuveArticle.php?id='.htmlspecialchars($id_article).'">
+                              <button 
                                         class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">
                                         Approuver
                                     </button>
-                                    <button onclick="rejectArticle(<?php echo $article['id']; ?>)"
+                              </a>
+                                    
+                                    <button 
                                         class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
                                         Rejeter
                                     </button>
                                 </div>
-                            </div>
+                            </div>';
+                            }
+                        }
+                            ?>
                         </div>
 
                     </div>
@@ -164,16 +199,17 @@ if(!isAuth('admin')){
             <section>
                 <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 mb-8 hover:shadow-2xl transition-all duration-300">
                     <h2 class="text-xl font-semibold mb-6 text-gray-800">Créer nouvelle categorie</h2>
-                    <form id="articleForm" class="space-y-6">
+                    <form id="articleForm"   class="space-y-6" action="../functions/addCategory.php" method="POST">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
-                            <input  type="text" required
+                            <input  type="text" required name="category"
                                 class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
                                 placeholder="Entrer le titre de la nouvelle categorie"
                             >
                         </div>
                         <button 
-                        type="submit"
+
+                        type="submit" name="addCategory"
                         class="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200 font-medium"
                       >
                         Ajouter la nouvelle Catégorie
@@ -184,24 +220,39 @@ if(!isAuth('admin')){
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h3 class="text-lg font-semibold mb-4">Toutes les categories</h3>
                     <div class="space-y-4">
-                        <div class="flex items-center justify-between border-b pb-2">
-                            <div>
-                                <h4 class="font-medium">Classical</h4>
-                                <p class="text-sm text-gray-500">
-                                    Par Jean Martin • 2024-12-87
-                                </p>
-                            </div>
-                            <div class="flex space-x-2">
-                                <button onclick="approveArticle(<?php echo $article['id']; ?>)"
-                                    class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">
-                                    Approuver
-                                </button>
-                                <button onclick="rejectArticle(<?php echo $article['id']; ?>)"
-                                    class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
-                                    Rejeter
-                                </button>
-                            </div>
-                        </div>
+                        <?php
+                        require_once '../classes/admin.php';
+                        $admin=new Admin("","","","","","");
+                        $rows=$admin->showCategory();
+                        if($rows){
+                            foreach ($rows as $row){
+                                echo'<div class="flex items-center justify-between border-b pb-2">';
+                                echo"<div>
+                                    <h4 class='font-medium'>".$row['titre']."</h4>";
+                                  echo'  <p class="text-sm text-gray-500">
+                                        Par '.$row["prenom"].' '.$row["nom"].'    •   '.$row["dateCreation"].'
+                                    </p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button "
+                                        class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">
+                                        Approuver
+                                    </button>
+                                    <button 
+                                        class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
+                                        Rejeter
+                                    </button>
+                                </div>
+                            </div>';
+                            }
+                        }
+                        
+
+
+                       
+
+                        ?>
+
                     </div>
 
                 </div>
@@ -226,16 +277,28 @@ if(!isAuth('admin')){
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
-                                    
-                                            <tr>
+                                    <?php
+                                  require_once '../classes/admin.php';
+                                  $admin=new Admin("","","","","","");
+                                  $rows=$admin->showAuteur();
+                                  if($rows){
+                                      foreach ($rows as $row){
+                                  echo'  <tr>
                                                 <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div class="text-sm font-medium text-gray-700">Pierre Durand</div>
+                                                    <div class="text-sm font-medium text-gray-700">'.$row["prenom"].' '.$row["nom"].'</div>
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">pierre.durand@email.com</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-green-700 text-center font-bold">10</td>
-                                                <td class="px-6 py-4 text-sm text-red-500 text-center font-bold">3</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">'.$row["email"].' </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-green-700 text-center font-bold">'.$row["nbr_article_confirmer"].' </td>
+                                                <td class="px-6 py-4 text-sm text-red-500 text-center font-bold">'.$row["nbr_article_annuler"].' </td>
                                                  
-                                            </tr>
+                                            </tr>';
+                                    
+                                    
+                                      }
+                                    }
+                                    
+                                    ?>
+                                            
                                         </tbody>
                                     </table>
                                 </div>
