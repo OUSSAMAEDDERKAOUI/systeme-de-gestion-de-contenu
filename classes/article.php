@@ -1,7 +1,7 @@
 <?php
 require_once '../config/db.php';
 
-class Categorie {
+class Article {
    protected  $id_article;
    protected  $titre;
    protected $contenu;
@@ -11,14 +11,14 @@ class Categorie {
    protected  $statut;
    protected $database;
 
-   public function  __construct($titre,$contenu,$dateCreation,$id_categorie,$id_auteur,$statut){
+   public function  __construct($titre,$contenu,$date_publication,$id_categorie,$id_auteur,$statut){
 
     $this->titre=$titre;
     $this->contenu=$contenu;
-    $this->dateCreation=$dateCreation;
+    $this->date_publication=$date_publication;
     $this->id_categorie=$id_categorie;
     $this->id_auteur=$id_auteur;
-    $this->status=$statut;
+    $this->statut=$statut;
     $this->database = new Database;
 
    }

@@ -168,6 +168,24 @@ WHERE article.statut='annuler'");
 
 
 
+public function approuveArticle($id_article){
+    $query ="UPDATE article
+SET article.statut='confirmer'
+            WHERE id_article=:id_article";  
+    $stmt = $this->database->getConnection()->prepare($query)   ;
+
+    $stmt->bindValue( ':id_article' , $id_article,PDO::PARAM_INT)  ;
+    
+
+    try {
+        $stmt->execute();
+    } catch (PDOException $e) {
+        throw new PDOException($e->getMessage(), (int)$e->getCode());
+    }
+}
+
+
+
 }
     
 

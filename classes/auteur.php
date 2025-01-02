@@ -26,9 +26,9 @@ class Auteur extends Membre {
     public function updateArticle($id_article,$titre,$contenu,$date, $id_categorie){
         $query ="UPDATE `article`
                 SET 
-                    `titre`=':titre',
-                    `contenu`=':contenu',
-                     `id_categorie`=':id_categorie',
+                    `titre`=:titre,
+                    `contenu`=:contenu,
+                     `id_categorie`=:id_categorie,
                 WHERE id_article=:id_article";  
         $stmt = $this->database->getConnection()->prepare($query)   ;
 
