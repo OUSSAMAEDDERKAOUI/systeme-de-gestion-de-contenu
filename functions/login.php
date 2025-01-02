@@ -32,7 +32,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             if ($loggedInUser) {
                 
                 echo'5';
- 
+
                 $_SESSION['user_id'] = $loggedInUser->getId();
                 $_SESSION['user_prenom'] = $loggedInUser->getPrenom();
                 $_SESSION['user_nom'] = $loggedInUser->getNom();
@@ -40,17 +40,19 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                 $_SESSION['user_role'] = $loggedInUser->getRole();
 
 echo  $_SESSION['user_role'];
-                echo 'HOLA'."</n>";
 
 
 
-                header('Location: ../views/'.$_SESSION['user_role'].'.php');
-                if($_SESSION['user_role'] ==='admin'){
-                    header("Location: ../views/admin.php");
-                }else{
-                    header("Location: ../views/membre.php");
-                }
-                // header('Location: '.$_SERVER['PHP_SELF']);
+                // header('Location: ../views/'.$_SESSION['user_role'].'.php');
+                // if($_SESSION['user_role'] ==='admin'){
+                //     header("Location: ../views/admin.php");
+                // }else if($_SESSION['user_role'] ==='membre'){
+                //     header("Location: ../views/membre.php");
+                // } else if($_SESSION['user_role'] ==='auteur'){
+                //     header("Location: ../views/auteur.php");
+                    
+                // }
+                header('Location: '.$_SERVER['PHP_SELF']);
 
 
                 exit;

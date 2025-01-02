@@ -1,5 +1,5 @@
 <?php
-  require '../config/db.php' ;
+  require_once '../config/db.php' ;
 
 class Users{ 
    protected $id_user ;
@@ -56,11 +56,6 @@ class Users{
    }
   
    public function login($postEmail , $postPassword){
-
-
-
-echo'test';
-
 
     $stmt=$this->database->getConnection()->prepare(" SELECT * FROM users WHERE users.email=:email");
 

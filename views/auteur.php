@@ -1,8 +1,7 @@
 
-
 <?php
-    session_start();
 
+session_start();
 
 require_once '../functions/checkRole.php';
 if(!isAuth('auteur')){
@@ -62,7 +61,7 @@ if(!isAuth('auteur')){
                     <p class="text-xs uppercase text-purple-300">Paramètres</p>
                 </div>
                
-                <a href="login.html" class="flex items-center px-6 py-3 hover:bg-purple-700 transition-colors duration-200">
+                <a href="../functions/logout.php" class="flex items-center px-6 py-3 hover:bg-purple-700 transition-colors duration-200">
                     <i class="fas fa-sign-out-alt mr-3"></i>
                     Déconnexion
                 </a>

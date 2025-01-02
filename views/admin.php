@@ -46,6 +46,10 @@ if(!isAuth('admin')){
                 <a href="users.php" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200">
                     Utilisateurs
                 </a>
+                <a href="../functions/logout.php" class="flex items-center px-6 py-3 hover:bg-red-500 transition-colors duration-200">
+                    <i class="fas fa-sign-out-alt "></i>
+                    Déconnexion
+                </a>
             </nav>
         </aside>
 

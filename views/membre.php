@@ -1,11 +1,10 @@
-
 <?php
 
 session_start();
 
 require_once '../functions/checkRole.php';
 if(!isAuth('membre')){
-    header('Location: ../views/login.php');
+    header('Location: ../views/'.$_SESSION['user_role'].'.php');
 }
 
 
@@ -50,7 +49,12 @@ if(!isAuth('membre')){
                                      alt="Profile" 
                                      class="h-10 w-10 rounded-full object-cover">
                                 <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-400 border-2 border-white"></div>
+                                
                             </div>
+                            <a href="../functions/logout.php" class="flex items-center px-6 py-3 hover:bg-purple-700 transition-colors duration-200">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    Déconnexion
+                </a>
                         </div>
             </div>
         </div>
