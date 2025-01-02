@@ -11,7 +11,7 @@ class Database {
     
     public function __construct() {
         $this->host ='localhost';
-        $this->db =' gestion_contenu';
+        $this->db ='gestion_contenu';
         $this->user = 'root';
         $this->pass = '';
         $this->charset ='utf8mb4';

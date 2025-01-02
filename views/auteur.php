@@ -1,3 +1,19 @@
+
+
+<?php
+    session_start();
+
+
+require_once '../functions/checkRole.php';
+if(!isAuth('auteur')){
+    header('Location: ../views/'.$_SESSION['user_role'].'.php');
+}
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

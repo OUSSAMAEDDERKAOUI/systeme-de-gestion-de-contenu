@@ -1,5 +1,5 @@
 <?php
-  require_once './config/db.php' ;
+  require '../config/db.php' ;
 
 class Users{ 
    protected $id_user ;
@@ -18,7 +18,7 @@ class Users{
     $this->email=$email;
     $this->password=$password ;
     $this->role=$role;
-    $this->database= new database;
+    $this->database= new Database;
    }
 
    public function getId(){
@@ -59,7 +59,7 @@ class Users{
 
 
 
-
+echo'test';
 
 
     $stmt=$this->database->getConnection()->prepare(" SELECT * FROM users WHERE users.email=:email");

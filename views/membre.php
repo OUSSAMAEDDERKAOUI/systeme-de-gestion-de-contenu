@@ -1,3 +1,19 @@
+
+<?php
+
+session_start();
+
+require_once '../functions/checkRole.php';
+if(!isAuth('membre')){
+    header('Location: ../views/login.php');
+}
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
