@@ -34,18 +34,18 @@ if (!isAuth('admin')) {
             </div>
 
             <nav class="mt-6">
-                <a href="dashboard.php" class="block py-3 px-6 bg-gray-800">
+                <div id="dashboard_button"  class="block py-3 px-6 bg-gray-800">
                     Dashboard
-                </a>
-                <a href="categories.php" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200">
+                </div>
+                <div id="category_button" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200">
                     Catégories
-                </a>
-                <a href="articles.php" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200">
+                </div>
+                <div id="Article_button" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200">
                     Articles
-                </a>
-                <a href="users.php" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200">
-                    Utilisateurs
-                </a>
+                </div>
+                <div id="auteur_button"  class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200">
+                    Auteurs
+                </div>
                 <a href="../functions/logout.php" class="flex items-center px-6 py-3 hover:bg-red-500 transition-colors duration-200">
                     <i class="fas fa-sign-out-alt "></i>
                     Déconnexion
@@ -55,9 +55,9 @@ if (!isAuth('admin')) {
 
         <!-- Main Content -->
         <div class="ml-64 p-8">
-            <section class="hidden">
+            <section class="" id="statistique">
                 <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-16 mb-8">
                     <!-- Total Articles -->
                     <div class="bg-white rounded-lg shadow-md p-6 animate__animated animate__fadeIn">
                         <div class="flex items-center">
@@ -149,7 +149,7 @@ if (!isAuth('admin')) {
                     </div>
                     </section>
 
-<section class="">
+<section class="hidden" id="article">
 <div class="w-[70%] ml-[15%] mb-8">
                         <!-- Articles en Attente -->
                         <div class="bg-white rounded-lg shadow-md p-6">
@@ -196,7 +196,7 @@ if (!isAuth('admin')) {
                   
             </section>
             <!-- categorie section -->
-            <section class="hidden">
+            <section class="hidden" id="categorie">
                 <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 mb-8 hover:shadow-2xl transition-all duration-300">
                     <h2 class="text-xl font-semibold mb-6 text-gray-800">Créer nouvelle categorie</h2>
                     <form id="articleForm" class="space-y-6" action="../functions/addCategory.php" method="POST">
@@ -232,14 +232,13 @@ if (!isAuth('admin')) {
                                     </p>
                                 </div>
                                 <div class="flex space-x-2">
-                                    <button "
-                                        class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">
-                                        Approuver
-                                    </button>
+                                <a href="../functions/removeCategory.php">
                                     <button 
                                         class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
                                         Rejeter
                                     </button>
+                                </a>
+                                    
                                 </div>
                             </div>';
                             }
@@ -254,7 +253,7 @@ if (!isAuth('admin')) {
 
             </section>
             <!-- Utilisateurs section  -->
-            <section class="hidden">
+            <section class="hidden" id="auteur">
 
                 <div class="bg-white rounded-lg shadow-md mt-6">
                     <div class="p-6">
@@ -303,6 +302,23 @@ if (!isAuth('admin')) {
     </div>
 
     <script>
+document.getElementById('auteur_button').onclick= function(){
+    document.getElementById('auteur').classList.remove('hidden')
+    document.getElementById('article').classList.add('hidden')
+    document.getElementById('categorie').classList.add('hidden')
+}
+document.getElementById('Article_button').onclick= function(){
+    document.getElementById('auteur').classList.add('hidden')
+    document.getElementById('article').classList.remove('hidden')
+    document.getElementById('categorie').classList.add('hidden')
+}
+document.getElementById('category_button').onclick= function(){
+    document.getElementById('auteur').classList.add('hidden')
+    document.getElementById('article').classList.add('hidden')
+    document.getElementById('categorie').classList.remove('hidden')
+}
+
+
 
 
     </script>
