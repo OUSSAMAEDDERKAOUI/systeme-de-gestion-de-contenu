@@ -299,9 +299,16 @@ if(!isAuth('auteur')){
 
                <section class="m-12">
                 <div class="articles-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                  <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
+                <?php
+
+$auteur->showArticle();
+$rows=$auteur->showArticle();
+                echo'  <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
                     <div class="relative">
-                        <img src="../assets/img/photo-1511379938547-c1f69419868d.jpeg" alt="${article.title}" class="w-full h-48 object-cover">
+                        <img src="../assets/img/photo-1511379938547-c1f69419868d.jpeg" alt="" class="w-full h-48 object-cover">
+                       
+
+
                         <div class="absolute top-0 right-0 m-2">
                             <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">
                                 music
@@ -332,7 +339,9 @@ if(!isAuth('auteur')){
                           
                       </div>
                     </div>
-                </article>             
+                </article> ';
+                ?>
+            
                </div>
                
                </section>
