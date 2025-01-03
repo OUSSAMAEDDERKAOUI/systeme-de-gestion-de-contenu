@@ -162,7 +162,7 @@ if ($result) {
             <span>50 vues</span>
         </div>
         <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-600">Par' . ' ' . $row['nom'] . '  ' . $row['prenom'] . '  </span> 
+            <span class="font-bold m-6 text-blue-900">Par' . ' ' . $row['nom'] . '  ' . $row['prenom'] . ' : </span> 
         </div>
         <h3 class="text-xl font-bold text-gray-800 mb-2">' . $row['articleTitre'] . '
         </h3>
