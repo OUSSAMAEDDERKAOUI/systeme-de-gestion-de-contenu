@@ -47,11 +47,9 @@ class Auteur extends Membre {
 
 
     public function deleteArticle($id_article){
-        $query ="UPDATE `article`
-                SET `statut`='annuler'
+        $query ="DELETE FROM `article`
                 WHERE id_article=:id_article";  
         $stmt = $this->database->getConnection()->prepare($query)   ;
-        
         $stmt->bindValue( ':id_article' , $id_article,PDO::PARAM_INT)  ;
       
 
@@ -129,13 +127,16 @@ public function showCategory() {
 
 
 
-public function showArticle() {
-    $stmt = $this->database->getConnection()->prepare("SELECT  article.titre, article.contenu, article.date_publication, article.statut ,categorie.titre,users.nom,users.prenom
+public function showArticle($id_user) {
+
+    
+    $stmt = $this->database->getConnection()->prepare("SELECT  article.titre AS articleTitre, article.contenu, article.date_publication, article.statut ,categorie.titre AS categorieTitre ,article.id_article,users.nom,users.prenom
                                                       FROM article 
                                                       JOIN users ON article.id_auteur=users.id_user
                                                       JOIN categorie on article.id_categorie=categorie.id_categorie 
-                                                      WHERE article.statut='confirmer';"
+                                                      WHERE users.id_user=:id_user ;"
                                                       );
+                                                      $stmt->bindParam(':id_user',$id_user,PDO::PARAM_INT);
 
     try {
         $stmt->execute();
@@ -145,7 +146,7 @@ public function showArticle() {
         if (!empty($result)) {
             return $result;  
         } else {
-            throw new Exception("Aucun categorie trouvé.");  
+           echo "Aucun article trouvé.";  
         }
         
     } catch (PDOException $e) {
@@ -158,6 +159,38 @@ public function showArticle() {
     }
 }
 
+
+public function showapprovedArticle($id_user) {
+
+    
+    $stmt = $this->database->getConnection()->prepare("SELECT  article.titre AS articleTitre, article.contenu, article.date_publication, article.statut ,categorie.titre AS categorieTitre ,article.id_article,users.nom,users.prenom
+                                                      FROM article 
+                                                      JOIN users ON article.id_auteur=users.id_user
+                                                      JOIN categorie on article.id_categorie=categorie.id_categorie 
+                                                      WHERE article.statut='confirmer' AND users.id_user=:id_user ;"
+                                                      );
+                                                      $stmt->bindParam(':id_user',$id_user,PDO::PARAM_INT);
+
+    try {
+        $stmt->execute();
+        
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (count($result)>0) {
+            return $result;  
+        } else {
+           echo "Aucun article trouvé.";  
+        }
+        
+    } catch (PDOException $e) {
+        echo "Erreur de base de données : " . $e->getMessage();
+        return null; 
+    } catch (Exception $e) {
+
+        echo "Erreur : " . $e->getMessage();
+        return null;  
+    }
+}
 
 }
 

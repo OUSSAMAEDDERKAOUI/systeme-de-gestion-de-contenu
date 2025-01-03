@@ -37,16 +37,16 @@ if (!isAuth('admin')) {
                 <div id="dashboard_button"  class="block py-3 px-6 bg-gray-800">
                     Dashboard
                 </div>
-                <div id="category_button" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200">
+                <div id="category_button" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200 cursor-pointer">
                     Catégories
                 </div>
-                <div id="Article_button" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200">
+                <div id="Article_button" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200 cursor-pointer">
                     Articles
                 </div>
-                <div id="auteur_button"  class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200">
+                <div id="auteur_button"  class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200 cursor-pointer">
                     Auteurs
                 </div>
-                <a href="../functions/logout.php" class="flex items-center px-6 py-3 hover:bg-red-500 transition-colors duration-200">
+                <a href="../functions/logout.php" class="flex items-center px-6 py-3 hover:bg-red-500 transition-colors duration-200 cursor-pointer">
                     <i class="fas fa-sign-out-alt "></i>
                     Déconnexion
                 </a>
