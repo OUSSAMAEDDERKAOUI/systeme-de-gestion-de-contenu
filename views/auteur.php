@@ -181,7 +181,7 @@ if (!isAuth('auteur')) {
                         <?php
                         $id_user = $_SESSION['user_id'];
 
-                        $rows = $auteur->showapprovedArticle($id_user);
+                        $rows = $auteur->showapprovedArt($id_user);
                         if (is_array($rows) && count($rows) > 0) {
 
                             foreach ($rows as $row) {

@@ -126,20 +126,25 @@ if (!isAuth('membre')) {
             <!-- //////////////////////////////////////////////////////////////////: -->
 
 
+         
+
+<div class="articles-grid grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6">
+                    <?php
 
 
-            <div class="articles-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                <?php
+require_once '../classes/membre.php';
 
-                $id_user = $_SESSION['user_id'];
-                require_once '../classes/membre.php';
-                $membre = new Membre("", "", "", "", "", "");
-                $rows = $membre->showapprovedArticle();
+ $membre = new Membre("", "", "", "", "", "");
 
-                if (is_array($rows) && count($rows) > 0) {
-                    foreach ($rows as $row) {
-                        $id_article=$row['id_article'];
-                        echo '  <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
+
+
+ $id_article=$_GET['id'];
+
+
+$result = $membre->showDetails($id_article);
+if ($result) {
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)){
+                            echo '  <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
     <div class="relative">
         <img src="../assets/img/photo-1511379938547-c1f69419868d.jpeg" alt="" class="w-full h-48 object-cover">
        
@@ -156,33 +161,29 @@ if (!isAuth('membre')) {
             <span class="mx-2">•</span>
             <span>50 vues</span>
         </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm text-gray-600">Par' . ' ' . $row['nom'] . '  ' . $row['prenom'] . '  </span> 
+        </div>
         <h3 class="text-xl font-bold text-gray-800 mb-2">' . $row['articleTitre'] . '
         </h3>
-        <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-600">Par' . ' ' . $row['nom'] . '  ' . $row['prenom'] . '  </span>
-<a href="./details.php?id='.htmlspecialchars($id_article).'">
-<button class="text-purple-600 hover:text-purple-700">
-                                Voir tout <i class="fas fa-arrow-right ml-1"></i>
-                            </button>
-</a>
-           
-          
-        </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-2">' . $row['contenu'] . '
+        </h3>
+        
       
     </div>
 </article> ';
-                    }
-                }
-                ?>
+                        }
+}
+                    ?>
 
-            </div>
+                </div>
 
 
 
-            <!-- Pagination -->
-            <div class="pagination flex justify-center space-x-2 mt-8">
-                <!-- Les boutons de pagination seront injectés ici par JavaScript -->
-            </div>
+                    <!-- Pagination -->
+                    <div class="pagination flex justify-center space-x-2 mt-8">
+                        <!-- Les boutons de pagination seront injectés ici par JavaScript -->
+                    </div>
     </main>
 
     <!-- Footer -->

@@ -160,7 +160,7 @@ public function showArticle($id_user) {
 }
 
 
-public function showapprovedArticle($id_user) {
+public function showapprovedArt($id_user) {
 
     
     $stmt = $this->database->getConnection()->prepare("SELECT  article.titre AS articleTitre, article.contenu, article.date_publication, article.statut ,categorie.titre AS categorieTitre ,article.id_article,users.nom,users.prenom

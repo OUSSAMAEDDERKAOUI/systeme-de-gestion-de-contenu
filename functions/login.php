@@ -6,8 +6,11 @@ require_once '../classes/user.php' ;
 require_once '../config/db.php';
 require_once '../functions/checkRole.php';
 
-if(!isAuth('guest')){
+if(!isAuth('admin')&& !isAuth('membre')&&!isAuth('auteur')){
+    header('Location: ../views/login.php');
+}else {
     header('Location: ../views/'.$_SESSION['user_role'].'.php');
+
 }
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
