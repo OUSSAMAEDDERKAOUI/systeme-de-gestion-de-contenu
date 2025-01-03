@@ -303,11 +303,7 @@ if (!isAuth('admin')) {
     </div>
 
     <script>
-document.getElementById('auteur_button').onclick= function(){
-    document.getElementById('auteur').classList.remove('hidden')
-    document.getElementById('article').classList.add('hidden')
-    document.getElementById('categorie').classList.add('hidden')
-}
+
 document.getElementById('Article_button').onclick= function(){
     document.getElementById('auteur').classList.add('hidden')
     document.getElementById('article').classList.remove('hidden')
@@ -317,6 +313,13 @@ document.getElementById('category_button').onclick= function(){
     document.getElementById('auteur').classList.add('hidden')
     document.getElementById('article').classList.add('hidden')
     document.getElementById('categorie').classList.remove('hidden')
+}
+
+
+document.getElementById('auteur_button').onclick= function(){
+    document.getElementById('auteur').classList.remove('hidden')
+    document.getElementById('article').classList.add('hidden')
+    document.getElementById('categorie').classList.add('hidden')
 }
 
 
