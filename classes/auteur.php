@@ -1,14 +1,13 @@
 <?php
-require_once './user.php';
+require_once __DIR__.'./membre.php';
 
 class Auteur extends Membre {
 
-    public function addArticle($titre,$date, $contenu,$id_categorie,$id_auteur){
+    public function addArticle($titre, $contenu,$id_categorie,$id_auteur){
         $query ="INSERT INTO article (article.titre , article.date_publication,article.contenu,article.id_categorie,article.id_auteur)
-                 VALUES (':titre',':date',':contenu',':id_categorie',':id_auteur') ";  
+                 VALUES (:titre,CURRENT_DATE,:contenu,:id_categorie,:id_auteur) ";  
         $stmt = $this->database->getConnection()->prepare($query)   ;
         $stmt->bindValue(':titre',$titre ,PDO::PARAM_STR) ;        
-        $stmt->bindValue( ':date' , $date,PDO::PARAM_STR) ; 
         $stmt->bindValue( ':contenu' , $contenu,PDO::PARAM_STR) ; 
         $stmt->bindValue( ':id_categorie' , $id_categorie,PDO::PARAM_INT) ; 
         $stmt->bindValue( ':id_auteur' , $id_auteur,PDO::PARAM_INT)  ;
@@ -62,6 +61,73 @@ class Auteur extends Membre {
             throw new PDOException($e->getMessage(), (int)$e->getCode());
         }
     }
+
+
+
+
+    public function allArticle($id_auteur){
+
+        
+        $stmt = $this->database->getConnection()->prepare("SELECT COUNT(article.id_article)  AS nbr_article
+                                                        FROM article JOIN users on  article.id_auteur=users.id_user
+                                                        WHERE article.id_auteur=:id_auteur");
+          $stmt->bindParam(':id_auteur',$id_auteur,PDO::PARAM_INT);
+        $stmt->execute(); 
+        $result=$stmt->fetch(PDO::FETCH_ASSOC);
+return $result;
+}
+
+
+
+public function confirmedArticle($id_auteur){
+    $stmt = $this->database->getConnection()->prepare("SELECT COUNT(article.id_article)  AS nbr_article
+                                                        FROM article JOIN users on  article.id_auteur=users.id_user
+                                                        WHERE article.id_auteur=:id_auteur AND  article.statut='confirmer'");
+    $stmt->bindParam(':id_auteur',$id_auteur,PDO::PARAM_INT);
+
+    $stmt->execute(); 
+    $result=$stmt->fetch(PDO::FETCH_ASSOC);
+return $result;
+}
+
+
+public function rejectedArticle($id_auteur){
+    $stmt = $this->database->getConnection()->prepare("SELECT COUNT(article.id_article)  AS nbr_article
+                                                        FROM article JOIN users on  article.id_auteur=users.id_user
+                                                        WHERE article.id_auteur=:id_auteur AND article.statut='annuler'");
+    $stmt->bindParam(':id_auteur',$id_auteur,PDO::PARAM_INT);
+
+    $stmt->execute(); 
+    $result=$stmt->fetch(PDO::FETCH_ASSOC);
+return $result;
+}
+
+
+public function showCategory() {
+    $stmt = $this->database->getConnection()->prepare("SELECT DISTINCT categorie.titre ,categorie.id_categorie FROM categorie  WHERE categorie.status='confirmee' ");
+
+    try {
+        $stmt->execute();
+        
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($result)) {
+            return $result;  
+        } else {
+            throw new Exception("Aucun categorie trouvé.");  
+        }
+        
+    } catch (PDOException $e) {
+        echo "Erreur de base de données : " . $e->getMessage();
+        return null; 
+    } catch (Exception $e) {
+
+        echo "Erreur : " . $e->getMessage();
+        return null;  
+    }
+}
+
+
 
 }
 

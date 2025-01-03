@@ -1,14 +1,13 @@
 
 <?php
 
-session_start();
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start(); 
+}
 require_once '../functions/checkRole.php';
 if(!isAuth('auteur')){
     header('Location: ../views/'.$_SESSION['user_role'].'.php');
 }
-
-
 ?>
 
 
@@ -80,7 +79,7 @@ if(!isAuth('auteur')){
                             </button>
                             <div class="ml-4">
                                 <h2 class="text-xl font-semibold text-gray-800">Dashboard</h2>
-                                <p class="text-sm text-gray-600">Bienvenue, Marie Dubois</p>
+                                <p class="text-sm text-gray-600">Bienvenue, </p>
                             </div>
                         </div>
                         <div class="flex items-center space-x-4">
@@ -105,11 +104,16 @@ if(!isAuth('auteur')){
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-500 mb-1">Total Articles</p>
-                                <h3 class="text-2xl font-bold text-gray-800">24</h3>
-                                <p class="text-xs text-green-500 mt-1">
-                                    <i class="fas fa-arrow-up mr-1"></i>
-                                    +12.5% ce mois
-                                </p>
+                                <?php
+                                require_once '../classes/auteur.php';
+                                $auteur = new Auteur("", "", "", "", "", "");
+                                            $id_auteur=$_SESSION['user_id'];
+                                $result = $auteur->allArticle($id_auteur);
+
+                                echo ' <p class="text-2xl font-semibold text-gray-800">' . $result['nbr_article'] . '</p>'
+                            
+                                ?>                             
+                                   
                             </div>
                             <div class="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center">
                                 <i class="fas fa-newspaper text-purple-600 text-xl"></i>
@@ -121,11 +125,15 @@ if(!isAuth('auteur')){
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-500 mb-1">Articles Approuvés</p>
-                                <h3 class="text-2xl font-bold text-gray-800">18</h3>
-                                <p class="text-xs text-green-500 mt-1">
-                                    <i class="fas fa-arrow-up mr-1"></i>
-                                    +8.3% ce mois
-                                </p>
+                                <?php
+                                require_once '../classes/auteur.php';
+                                $auteur = new Auteur("", "", "", "", "", "");
+                                            $id_auteur=$_SESSION['user_id'];
+                                $result = $auteur->confirmedArticle($id_auteur);
+
+                                echo ' <p class="text-2xl font-semibold text-gray-800">' . $result['nbr_article'] . '</p>'
+                            
+                                ?>                                
                             </div>
                             <div class="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
                                 <i class="fas fa-check-circle text-green-600 text-xl"></i>
@@ -137,8 +145,15 @@ if(!isAuth('auteur')){
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-500 mb-1">En Attente</p>
-                                <h3 class="text-2xl font-bold text-gray-800">6</h3>
-                                <p class="text-xs text-yellow-500 mt-1">
+                                <?php
+                                require_once '../classes/auteur.php';
+                                $auteur = new Auteur("", "", "", "", "", "");
+                                            $id_auteur=$_SESSION['user_id'];
+                                $result = $auteur->rejectedArticle($id_auteur);
+
+                                echo ' <p class="text-2xl font-semibold text-gray-800">' . $result['nbr_article'] . '</p>'
+                            
+                                ?>                                  <p class="text-xs text-yellow-500 mt-1">
                                     <i class="fas fa-clock mr-1"></i>
                                     En cours de révision
                                 </p>
@@ -231,28 +246,40 @@ if(!isAuth('auteur')){
                       <!-- Create Article Form -->
                       <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 mb-8 hover:shadow-2xl transition-all duration-300">
                         <h2 class="text-xl font-semibold mb-6 text-gray-800">Create New Article</h2>
-                        <form id="articleForm" class="space-y-6">
+                        <form id="articleForm" class="space-y-6" action="../functions/insertArticle.php" method="post">
                           <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
                             <input 
-                              type="text" 
+                              type="text"  name="titre"
                               required
                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
                               placeholder="Enter article title..."
                             >
                           </div>
                           <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                            <select 
-                              required
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Categorie</label>
+                            
+                            <?php
+                                     $auteur->showCategory();
+                                     $rows=$auteur->showCategory();
+                                   echo'  <select 
+                              required name="category"
                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
-                            >
-                              <option value="">Select a category...</option>
-                            </select>
-                          </div>
+                            >';
+                                     foreach($rows as $row){
+                                        $id_category= $row['id_categorie'];
+                                         echo'<option value="'. htmlspecialchars($id_category) .' ">'.$row['titre'].'</option>';
+
+                                }
+
+
+                            echo '</select>
+                            </div>';
+
+?>
                           <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Content</label>
-                            <textarea 
+                            <textarea name="content"
                               required
                               rows="8"
                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
@@ -260,7 +287,7 @@ if(!isAuth('auteur')){
                             ></textarea>
                           </div>
                           <button 
-                            type="submit"
+                            type="submit" name="insert"
                             class="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200 font-medium"
                           >
                             Publish Article
