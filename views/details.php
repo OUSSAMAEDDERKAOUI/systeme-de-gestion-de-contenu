@@ -144,9 +144,10 @@ require_once '../classes/membre.php';
 $result = $membre->showDetails($id_article);
 if ($result) {
     while ($row = $result->fetch(PDO::FETCH_ASSOC)){
+        $image=$row['image'];
                             echo '  <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
     <div class="relative">
-        <img src="../assets/img/photo-1511379938547-c1f69419868d.jpeg" alt="" class="w-full h-48 object-cover">
+        <img src="'.htmlspecialchars($image).'" alt="" class="w-full h-48 object-cover">
        
 
 

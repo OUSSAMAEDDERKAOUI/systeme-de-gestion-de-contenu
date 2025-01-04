@@ -138,10 +138,11 @@ if (!isAuth('membre')) {
 
                 if (is_array($rows) && count($rows) > 0) {
                     foreach ($rows as $row) {
+                        $image=$row['image'];
                         $id_article=$row['id_article'];
                         echo '  <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
     <div class="relative">
-        <img src="../assets/img/photo-1511379938547-c1f69419868d.jpeg" alt="" class="w-full h-48 object-cover">
+        <img src="'.htmlspecialchars($image).'" alt="" class="w-full h-48 object-cover">
        
 
 

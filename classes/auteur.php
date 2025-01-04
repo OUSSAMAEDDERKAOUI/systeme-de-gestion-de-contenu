@@ -130,7 +130,7 @@ public function showCategory() {
 public function showArticle($id_user) {
 
     
-    $stmt = $this->database->getConnection()->prepare("SELECT  article.titre AS articleTitre, article.contenu, article.date_publication, article.statut ,categorie.titre AS categorieTitre ,article.id_article,users.nom,users.prenom
+    $stmt = $this->database->getConnection()->prepare("SELECT  article.titre AS articleTitre, article.contenu, article.image, article.date_publication, article.statut ,categorie.titre AS categorieTitre ,article.id_article,users.nom,users.prenom
                                                       FROM article 
                                                       JOIN users ON article.id_auteur=users.id_user
                                                       JOIN categorie on article.id_categorie=categorie.id_categorie 
@@ -163,7 +163,7 @@ public function showArticle($id_user) {
 public function showapprovedArt($id_user) {
 
     
-    $stmt = $this->database->getConnection()->prepare("SELECT  article.titre AS articleTitre, article.contenu, article.date_publication, article.statut ,categorie.titre AS categorieTitre ,article.id_article,users.nom,users.prenom
+    $stmt = $this->database->getConnection()->prepare("SELECT  article.titre AS articleTitre, article.contenu, article.date_publication, article.statut, article.image ,categorie.titre AS categorieTitre ,article.id_article,users.nom,users.prenom
                                                       FROM article 
                                                       JOIN users ON article.id_auteur=users.id_user
                                                       JOIN categorie on article.id_categorie=categorie.id_categorie 

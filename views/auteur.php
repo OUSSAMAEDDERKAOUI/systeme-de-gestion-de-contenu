@@ -185,9 +185,10 @@ if (!isAuth('auteur')) {
                         if (is_array($rows) && count($rows) > 0) {
 
                             foreach ($rows as $row) {
+                                $image= $row['image'] ;
                                 echo ' <div class="space-y-4">
                             <div class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
-                                <img src="https://images.unsplash.com/photo-1579783901586-d88db74b4fe4" 
+                                <img src="'.htmlspecialchars($image).' " 
                                      alt="Article" 
                                      class="h-16 w-16 rounded-lg object-cover">
                                 <div class="ml-4 flex-1">
@@ -227,7 +228,7 @@ if (!isAuth('auteur')) {
                     <!-- Create Article Form -->
                     <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 mb-8 hover:shadow-2xl transition-all duration-300">
                         <h2 class="text-xl font-semibold mb-6 text-gray-800">Create New Article</h2>
-                        <form id="articleForm" class="space-y-6" action="../functions/insertArticle.php" method="post">
+                        <form id="articleForm" class="space-y-6" action="../functions/insertArticle.php" method="post" enctype="multipart/form-data" >
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
                                 <input
@@ -264,6 +265,14 @@ if (!isAuth('auteur')) {
                                         class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
                                         placeholder="Write your article content here..."></textarea>
                                 </div>
+                                <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">image</label>
+                                <input
+                                    type="file" name="image"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
+                                    placeholder="Enter article title...">
+                            </div>
                                 <button
                                     type="submit" name="insert"
                                     class="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200 font-medium">
@@ -282,9 +291,10 @@ if (!isAuth('auteur')) {
                     $rows = $auteur->showArticle($id_user);
                     if (is_array($rows) && count($rows) > 0) {
                         foreach ($rows as $row) {
+                            $image= $row['image'] ;
                             echo '  <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
     <div class="relative">
-        <img src="../assets/img/photo-1511379938547-c1f69419868d.jpeg" alt="" class="w-full h-48 object-cover">
+        <img src="'.htmlspecialchars($image).'">
        
 
 
