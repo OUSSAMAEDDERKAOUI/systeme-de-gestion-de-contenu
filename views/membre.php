@@ -6,12 +6,7 @@ require_once '../functions/checkRole.php';
 if (!isAuth('membre')) {
     header('Location: ../views/' . $_SESSION['user_role'] . '.php');
 }
-
-
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -35,8 +30,6 @@ if (!isAuth('membre')) {
                     <div class="flex-shrink-0 flex items-center">
                         <a href="index.html" class="text-2xl font-bold text-green-600">MelodyHub</a>
                     </div>
-                    <!-- Desktop Menu -->
-
                 </div>
                 <!-- Desktop Auth Buttons -->
                 <div class="flex items-center space-x-4">
@@ -48,7 +41,6 @@ if (!isAuth('membre')) {
                             alt="Profile"
                             class="h-10 w-10 rounded-full object-cover">
                         <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-400 border-2 border-white"></div>
-
                     </div>
                     <a href="../functions/logout.php" class="flex items-center px-6 py-3 hover:bg-purple-700 transition-colors duration-200">
                         <i class="fas fa-sign-out-alt mr-3"></i>
@@ -57,8 +49,6 @@ if (!isAuth('membre')) {
                 </div>
             </div>
         </div>
-
-
     </nav>
 
     <main class="container mx-auto px-4 py-8 mt-16 w-[80%] mx-auto px-4">
@@ -69,121 +59,75 @@ if (!isAuth('membre')) {
                 <button data-category="all" class="category-filter px-4 py-2 rounded-full bg-purple-600 text-white transition-colors duration-300">
                     Tous
                 </button>
-                <button data-category="Peinture" class="category-filter px-4 py-2 rounded-full bg-white text-purple-600 hover:bg-purple-100 transition-colors duration-300">
-                    Classical
-                </button>
-                <button data-category="Musique" class="category-filter px-4 py-2 rounded-full bg-white text-purple-600 hover:bg-purple-100 transition-colors duration-300">
-                    Pop
-                </button>
-                <button data-category="Littérature" class="category-filter px-4 py-2 rounded-full bg-white text-purple-600 hover:bg-purple-100 transition-colors duration-300">
-                    Rock
-                </button>
-
-                <button data-category="Théâtre" class="category-filter px-4 py-2 rounded-full bg-white text-purple-600 hover:bg-purple-100 transition-colors duration-300">
-                    Jazz
-                </button>
+               
+                <?php
+                    require_once '../classes/admin.php';
+                    $admin = new Admin("", "", "", "", "", "");
+                    $rows = $admin->showCategory();
+                    foreach ($rows as $row) {
+                        $id_category = $row['id_categorie'];
+                        echo '   
+                            <a href="?id=' . htmlspecialchars($id_category) . '">
+                                <button class="category-filter mx-2 px-4 py-2 rounded-full bg-white text-purple-600 hover:bg-purple-100 transition-colors duration-300">
+                                    ' . $row['titre'] . '
+                                </button>
+                            </a>';
+                    }
+                ?>
             </div>
         </div>
 
         <!-- Articles Grid -->
-        <section>
-
-
-
-            <!-- <section class="m-12">
-                <div class="articles-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
-                    <div class="relative">
-                        <img src="../assets/img/photo-1511379938547-c1f69419868d.jpeg" alt="${article.title}" class="w-full h-48 object-cover">
-                        <div class="absolute top-0 right-0 m-2">
-                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">
-                                music
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center text-sm text-gray-600 mb-2">
-                            <span>2024-12-31</span>
-                            <span class="mx-2">•</span>
-                            <span>50 vues</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">La Renaissance de la Musique Classique
-                        </h3>
-                        <p class="text-gray-600 mb-4">Comment la nouvelle génération redécouvre...</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm text-gray-600">Par Jean Martin </span>
-                            <a href="#" class="text-purple-600 hover:text-purple-800 transition-colors duration-300">
-                                Lire la suite →
-                            </a>
-                        </div>
-                       
-                    </div>
-                </article>             
-               </div> -->
-
-
-
-            <!-- //////////////////////////////////////////////////////////////////: -->
-
-
-
-
+        <section id="tousArticle">
             <div class="articles-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                 <?php
-
-                $id_user = $_SESSION['user_id'];
-                require_once '../classes/membre.php';
-                $membre = new Membre("", "", "", "", "", "");
-                $rows = $membre->showapprovedArticle();
-
-                if (is_array($rows) && count($rows) > 0) {
-                    foreach ($rows as $row) {
-                        $image=$row['image'];
-                        $id_article=$row['id_article'];
-                        echo '  <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
-    <div class="relative">
-        <img src="'.htmlspecialchars($image).'" alt="" class="w-full h-48 object-cover">
-       
-
-
-        <div class="absolute top-0 right-0 m-2">
-            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">
-              ' . $row['categorieTitre'] . ' </span>
-        </div>
-    </div>
-    <div class="p-6">
-        <div class="flex items-center text-sm text-gray-600 mb-2">
-            <span>' . $row['date_publication'] . '</span>
-            <span class="mx-2">•</span>
-            <span>50 vues</span>
-        </div>
-        <h3 class="text-xl font-bold text-gray-800 mb-2">' . $row['articleTitre'] . '
-        </h3>
-        <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-600">Par' . ' ' . $row['nom'] . '  ' . $row['prenom'] . '  </span>
-<a href="./details.php?id='.htmlspecialchars($id_article).'">
-<button class="text-purple-600 hover:text-purple-700">
-                                Voir tout <i class="fas fa-arrow-right ml-1"></i>
-                            </button>
-</a>
-           
-          
-        </div>
-      
-    </div>
-</article> ';
+                    $id_user = $_SESSION['user_id'];
+                    require_once '../classes/membre.php';
+                    $membre = new Membre("", "", "", "", "", "");
+                    
+                    if (isset($_GET['id']) && !empty($_GET['id'])) {
+                        $id = $_GET['id'];  
+                        $rows = $membre->showArticle($id);  
+                    } else {
+                        $rows = $membre->showapprovedArticle();  
                     }
-                }
+
+                    if (is_array($rows) && count($rows) > 0) {
+                        foreach ($rows as $row) {
+                            $image = $row['image'];
+                            $id_article = $row['id_article'];
+                            echo '  
+                            <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn" data-category="' . htmlspecialchars($row['categorieTitre']) . '">
+                                <div class="relative">
+                                    <img src="' . htmlspecialchars($image) . '" alt="" class="w-full h-48 object-cover">
+                                    <div class="absolute top-0 right-0 m-2">
+                                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">
+                                            ' . htmlspecialchars($row['categorieTitre']) . ' 
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center text-sm text-gray-600 mb-2">
+                                        <span>' . htmlspecialchars($row['date_publication']) . '</span>
+                                        <span class="mx-2">•</span>
+                                        <span>50 vues</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">' . htmlspecialchars($row['articleTitre']) . '</h3>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Par ' . htmlspecialchars($row['nom']) . ' ' . htmlspecialchars($row['prenom']) . '</span>
+                                        <a href="./details.php?id=' . htmlspecialchars($id_article) . '">
+                                            <button class="text-purple-600 hover:text-purple-700">
+                                                Voir tout <i class="fas fa-arrow-right ml-1"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>';
+                        }
+                    }
                 ?>
-
             </div>
-
-
-
-            <!-- Pagination -->
-            <div class="pagination flex justify-center space-x-2 mt-8">
-                <!-- Les boutons de pagination seront injectés ici par JavaScript -->
-            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -209,7 +153,23 @@ if (!isAuth('membre')) {
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <script>
+        // Category filter JavaScript
+        document.querySelectorAll('.category-filter').forEach(button => {
+            button.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                const articles = document.querySelectorAll('.articles-grid article');
+
+                articles.forEach(article => {
+                    if (category === 'all' || article.getAttribute('data-category') === category) {
+                        article.style.display = 'block'; 
+                    } else {
+                        article.style.display = 'none'; 
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

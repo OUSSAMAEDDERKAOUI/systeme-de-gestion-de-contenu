@@ -75,6 +75,43 @@ class Membre extends Users
         }
     }
 
+    public function showArticle($id_category)
+    {
+
+
+        $stmt = $this->database->getConnection()->prepare(
+            "SELECT  article.titre AS articleTitre, article.contenu, article.date_publication, article.statut, article.image ,categorie.titre AS categorieTitre ,article.id_article,users.nom,users.prenom
+                                                          FROM article 
+                                                          JOIN users ON article.id_auteur=users.id_user
+                                                          JOIN categorie on article.id_categorie=categorie.id_categorie 
+                                                          WHERE article.statut='confirmer' AND article.id_categorie=:id_category ;"
+        );
+        $stmt->bindParam(':id_category',$id_category,PDO::PARAM_INT);
+
+        try {
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (count($result) > 0) {
+                return $result;
+            } else {
+                echo "Aucun article trouvé.";
+            }
+        } catch (PDOException $e) {
+            echo "Erreur de base de données : " . $e->getMessage();
+            return null;
+        } catch (Exception $e) {
+
+            echo "Erreur : " . $e->getMessage();
+            return null;
+        }
+    }
+
+
+
+
+
 
     public function showDetails($id_article)
     {
