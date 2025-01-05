@@ -1,3 +1,25 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+require_once '../functions/checkRole.php';
+if (!isAuth('autre')) {
+    if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
+        header('Location: ../views/' . $_SESSION['user_role'] . '.php');
+}
+else {
+    header('Location: ../views/login.php');
+
+}
+}
+
+
+
+
+?> 
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

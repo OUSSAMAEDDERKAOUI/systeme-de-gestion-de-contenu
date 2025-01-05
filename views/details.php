@@ -4,7 +4,13 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 require_once '../functions/checkRole.php';
 if (!isAuth('membre')) {
-    header('Location: ../views/' . $_SESSION['user_role'] . '.php');
+    if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
+        header('Location: ../views/' . $_SESSION['user_role'] . '.php');
+}
+else {
+    header('Location: ../views/login.php');
+
+}
 }
 
 

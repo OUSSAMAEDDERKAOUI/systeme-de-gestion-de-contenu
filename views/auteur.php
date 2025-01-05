@@ -5,7 +5,13 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 require_once '../functions/checkRole.php';
 if (!isAuth('auteur')) {
-    header('Location: ../views/' . $_SESSION['user_role'] . '.php');
+    if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
+        header('Location: ../views/' . $_SESSION['user_role'] . '.php');
+}
+else {
+    header('Location: ../views/login.php');
+
+}
 }
 ?>
 
@@ -334,9 +340,73 @@ if (!isAuth('auteur')) {
                 </div>
 
             </section>
+           
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+            <!-- modifie article -->
+
+            <section>
+                <div id="newArticle" class=" w-[80%] ml-[10%] hidden mt-32 ">
 
 
+                    <!-- Create Article Form -->
+                    <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 mb-8 hover:shadow-2xl transition-all duration-300">
+                        <h2 class="text-xl font-semibold mb-6 text-gray-800">Create New Article</h2>
+                        <form id="articleForm" class="space-y-6" action="../functions/insertArticle.php" method="post" enctype="multipart/form-data" >
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                                <input
+                                    type="text" name="titre"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
+                                    placeholder="Enter article title...">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Categorie</label>
 
+                                <?php
+                                $auteur->showCategory();
+                                $rows = $auteur->showCategory();
+                                echo '  <select 
+                              required name="category"
+                              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
+                            >';
+                                foreach ($rows as $row) {
+                                    $id_category = $row['id_categorie'];
+                                    echo '<option value="' . htmlspecialchars($id_category) . ' ">' . $row['titre'] . '</option>';
+                                }
+
+
+                                echo '</select>
+                            </div>';
+
+                                ?>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Content</label>
+                                    <textarea name="content"
+                                        required
+                                        rows="8"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
+                                        placeholder="Write your article content here..."></textarea>
+                                </div>
+                                <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">image</label>
+                                <input
+                                    type="file" name="image"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
+                                    placeholder="Enter article title...">
+                            </div>
+                                <button
+                                    type="submit" name="insert"
+                                    class="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200 font-medium">
+                                    Publish Article
+                                </button>
+                        </form>
+                    </div>
+            </section>
+
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 
 
