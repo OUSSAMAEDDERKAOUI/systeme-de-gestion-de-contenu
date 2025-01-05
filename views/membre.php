@@ -105,7 +105,7 @@ else {
                             echo '  
                             <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn" data-category="' . htmlspecialchars($row['categorieTitre']) . '">
                                 <div class="relative">
-                                    <img src="' . htmlspecialchars($image) . '" alt="" class="w-full h-48 object-cover">
+                                    <img  src="' . htmlspecialchars($image) . '" alt="" class="w-[700px] h-[400px] object-cover">
                                     <div class="absolute top-0 right-0 m-2">
                                         <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">
                                             ' . htmlspecialchars($row['categorieTitre']) . ' 

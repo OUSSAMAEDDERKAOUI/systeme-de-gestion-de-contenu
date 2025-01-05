@@ -288,8 +288,9 @@ else {
                     </div>
             </section>
 
+<!-- /////////////////////////////allArticle///////////////////////////////////////// -->
 
-            <section id="allArticle" class="m-12 hidden">
+         <section id="allArticle" class="m-12 hidden">
                 <div class="articles-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                     <?php
 
@@ -298,9 +299,10 @@ else {
                     if (is_array($rows) && count($rows) > 0) {
                         foreach ($rows as $row) {
                             $image= $row['image'] ;
+                            $id_article=$row['id_article'];
                             echo '  <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
     <div class="relative">
-        <img src="'.htmlspecialchars($image).'">
+        <img class="w-[700px] h-[400px] object-cover" src="'.htmlspecialchars($image).'">
        
 
 
@@ -321,10 +323,12 @@ else {
             <span class="text-sm text-gray-600">Par' . ' ' . $row['nom'] . '  ' . $row['prenom'] . '  </span>
         </div>
         <div class="flex items-center justify-between">
-
-          <a href="#" class="text-purple-600 hover:text-purple-800 transition-colors duration-300">                            
+<a href="./modifyArticle.php?id='. $id_article.'">
+ <button type="button" class="  modifier_article  text-purple-600 hover:text-purple-800 transition-colors duration-300">                            
             <span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">modifier</span>
-          </a>
+          </button>
+</a>
+         
 
           <a href="../functions/deleteArticle.php?id= ' . htmlspecialchars($row['id_article']) . '" class="text-purple-600 hover:text-purple-800 transition-colors duration-300">
             <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">Supprimer</span>
@@ -339,74 +343,19 @@ else {
 
                 </div>
 
-            </section>
-           
-<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+               <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
             <!-- modifie article -->
 
-            <section>
-                <div id="newArticle" class=" w-[80%] ml-[10%] hidden mt-32 ">
-
-
-                    <!-- Create Article Form -->
-                    <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 mb-8 hover:shadow-2xl transition-all duration-300">
-                        <h2 class="text-xl font-semibold mb-6 text-gray-800">Create New Article</h2>
-                        <form id="articleForm" class="space-y-6" action="../functions/insertArticle.php" method="post" enctype="multipart/form-data" >
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
-                                <input
-                                    type="text" name="titre"
-                                    required
-                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
-                                    placeholder="Enter article title...">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Categorie</label>
-
-                                <?php
-                                $auteur->showCategory();
-                                $rows = $auteur->showCategory();
-                                echo '  <select 
-                              required name="category"
-                              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
-                            >';
-                                foreach ($rows as $row) {
-                                    $id_category = $row['id_categorie'];
-                                    echo '<option value="' . htmlspecialchars($id_category) . ' ">' . $row['titre'] . '</option>';
-                                }
-
-
-                                echo '</select>
-                            </div>';
-
-                                ?>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Content</label>
-                                    <textarea name="content"
-                                        required
-                                        rows="8"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
-                                        placeholder="Write your article content here..."></textarea>
-                                </div>
-                                <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">image</label>
-                                <input
-                                    type="file" name="image"
-                                    required
-                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
-                                    placeholder="Enter article title...">
-                            </div>
-                                <button
-                                    type="submit" name="insert"
-                                    class="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200 font-medium">
-                                    Publish Article
-                                </button>
-                        </form>
-                    </div>
-            </section>
+            
 
 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+
+
+            </section>
+           
 
 
 
@@ -432,6 +381,14 @@ document.getElementById('dashboardSection').onclick=function(){
 
 
 
+
+const modifier_article = document.querySelectorAll('.modifier_article');
+        const modals = document.querySelectorAll('.modifyModal');
+        modifier_article.forEach((button, index) => {
+            button.addEventListener('click', function(e) {
+                modals[index].classList.remove('hidden');
+            });
+        })
 
 
             </script>

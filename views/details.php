@@ -50,7 +50,7 @@ else {
                         <i class="fas fa-bell text-xl"></i>
                     </button>
                     <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+                        <img  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
                             alt="Profile"
                             class="h-10 w-10 rounded-full object-cover">
                         <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-400 border-2 border-white"></div>
@@ -69,7 +69,7 @@ else {
 
     <main class="container mx-auto px-4 py-8 mt-16 w-[80%] mx-auto px-4">
         <!-- Filtres -->
-        <div class="mb-8">
+        <!-- <div class="mb-8">
             <h2 class="text-2xl font-bold text-gray-800 mb-4">Catégories</h2>
             <div class="category-filters">
                 <button data-category="all" class="category-filter px-4 py-2 rounded-full bg-purple-600 text-white transition-colors duration-300">
@@ -89,7 +89,7 @@ else {
                     Jazz
                 </button>
             </div>
-        </div>
+        </div> -->
 
         <!-- Articles Grid -->
         <section>
@@ -153,7 +153,7 @@ if ($result) {
         $image=$row['image'];
                             echo '  <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
     <div class="relative">
-        <img src="'.htmlspecialchars($image).'" alt="" class="w-full h-48 object-cover">
+        <img src="'.htmlspecialchars($image).'" alt="" class="w-full h-96 object-cover">
        
 
 
@@ -173,8 +173,8 @@ if ($result) {
         </div>
         <h3 class="text-xl font-bold text-gray-800 mb-2">' . $row['articleTitre'] . '
         </h3>
-          <h3 class="text-xl font-bold text-gray-800 mb-2">' . $row['contenu'] . '
-        </h3>
+          <pre class="text-gray-800 mb-2 whitespace-pre-line">' . $row['contenu'] . '
+        </pre>
         
       
     </div>

@@ -22,27 +22,62 @@ class Auteur extends Membre {
 
 
 
-    public function updateArticle($id_article,$titre,$contenu,$date, $id_categorie){
-        $query ="UPDATE `article`
-                SET 
-                    `titre`=:titre,
-                    `contenu`=:contenu,
-                     `id_categorie`=:id_categorie,
-                WHERE id_article=:id_article";  
-        $stmt = $this->database->getConnection()->prepare($query)   ;
-
-        $stmt->bindValue( ':id_article' , $id_article,PDO::PARAM_INT)  ;
-        $stmt->bindValue(':titre',$titre ,PDO::PARAM_STR) ;  
-        $stmt->bindValue( ':contenu' , $contenu,PDO::PARAM_STR) ; 
-        $stmt->bindValue( ':id_categorie' , $id_categorie,PDO::PARAM_INT) ; 
-
+    public function updateArticle($id_article, $titre, $contenu, $id_categorie, $uploadedFile) {
+        $imagePath = null; // Initialize imagePath to ensure it can be used later
+    
+        if (isset($uploadedFile) && $uploadedFile['error'] === UPLOAD_ERR_OK) {
+            $permited = array('jpg', 'png', 'jpeg', 'gif');
+            $file_name = $uploadedFile['name'];
+            $file_size = $uploadedFile['size'];
+            $file_temp = $uploadedFile['tmp_name'];
+            $div = explode('.', $file_name);
+            $file_ext = strtolower(end($div));
+    
+            if (in_array($file_ext, $permited) === false) {
+                throw new Exception("Format d'image non autorisé. Autorisé : " . implode(', ', $permited));
+            }
+    
+            $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
+            $imagePath = "../upload/" . $unique_image;
+    
+            // Attempt to move the uploaded file
+            if (!move_uploaded_file($file_temp, $imagePath)) {
+                throw new Exception("Échec du téléchargement de l'image.");
+            }
+        } else {
+            throw new Exception("Aucune image à télécharger ou une erreur est survenue.");
+        }
+    
+        $query = "UPDATE `article`
+                  SET 
+                    `titre` = :titre,
+                    `contenu` = :contenu,
+                    `image` = :image,
+                    `id_categorie` = :id_categorie
+                  WHERE id_article = :id_article";
+    
+        echo '1';
+        $stmt = $this->database->getConnection()->prepare($query);
+        echo '2';
+    
+        // Bind parameters
+        $stmt->bindValue(':id_article', $id_article, PDO::PARAM_INT);
+        $stmt->bindValue(':titre', $titre, PDO::PARAM_STR);
+        $stmt->bindValue(':contenu', $contenu, PDO::PARAM_STR);
+        $stmt->bindValue(':image', $imagePath, PDO::PARAM_STR); // Use the new image path variable
+        $stmt->bindValue(':id_categorie', $id_categorie, PDO::PARAM_INT);
+        echo '3';
+    
         try {
             $stmt->execute();
+            // Optionally return a success status
+            return true; // Indicating success
         } catch (PDOException $e) {
-            throw new PDOException($e->getMessage(), (int)$e->getCode());
+            // Log the internal error message for debugging
+            error_log($e->getMessage());
+            throw new Exception("Une erreur est survenue lors de la mise à jour de l'article.");
         }
     }
-    
 
 
 
@@ -192,7 +227,40 @@ public function showapprovedArt($id_user) {
     }
 }
 
+
+
+
+
+public function showModifyArticle($id_article) {
+
+    
+    $stmt = $this->database->getConnection()->prepare("SELECT  article.titre , article.contenu, article.image ,categorie.titre AS categorieTitre
+                                                      FROM article   JOIN users ON article.id_auteur=users.id_user
+                                                      JOIN categorie on article.id_categorie=categorie.id_categorie 
+                                                      WHERE article.id_article=:id_article ;"
+                                                      );
+                                                      $stmt->bindParam(':id_article',$id_article,PDO::PARAM_INT);
+
+    
+        $stmt->execute();
+        
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+       return $result ;
 }
+
+
+
+
+
+
+
+}
+
+
+
+
+
 
 ?>
 
