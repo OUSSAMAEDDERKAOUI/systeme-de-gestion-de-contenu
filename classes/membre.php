@@ -129,7 +129,6 @@ class Membre extends Users
         try {
             $stmt->execute();
 
-
             if ($stmt) {
                 return $stmt;
             } else {
