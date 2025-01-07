@@ -146,4 +146,26 @@ class Membre extends Users
     }
 
 
+
+
+
+
+
+    public function addComment($contenu,$id_membre,$id_article){
+        $query="INSERT INTO commentaires (commentaires.contenu,commentaires.id_article,commentaires.id_membre)
+                 VALUES  (':contenu',':id_article',':id_membre')  ";
+        $stmt=$this->database->getConnection()->prepare($query);
+        $stmt->bindParam(':contenu',$contenu,PDO::PARAM_STR);
+        $stmt->bindParam(':id_article',$id_article,PDO::PARAM_STR);
+        $stmt->bindParam(':id_membre',$id_membre,PDO::PARAM_STR);
+
+        try {
+            $stmt->execute();
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage(), (int)$e->getCode());
+        }
+
+
+    }
+
 }

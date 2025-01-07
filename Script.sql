@@ -8,12 +8,7 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'membre', 'auteur') NOT NULL
 );
--- CREATE TABLE categorie (
---     id_categorie INT AUTO_INCREMENT PRIMARY KEY,
---     titre VARCHAR(255) NOT NULL,
---     dateCreation DATE NOT NULL,
---     status ENUM('confirmee', 'annulee') NOT NULL
--- );
+
 CREATE TABLE categorie (
     id_categorie INT AUTO_INCREMENT PRIMARY KEY,
     titre VARCHAR(255) NOT NULL,
