@@ -150,21 +150,86 @@ class Membre extends Users
 
 
 
-    public function addComment($contenu,$id_membre,$id_article){
+    public function addComment($contenu,$id_article,$id_membre){
         $query="INSERT INTO commentaires (commentaires.contenu,commentaires.id_article,commentaires.id_membre)
-                 VALUES  (':contenu',':id_article',':id_membre')  ";
+                 VALUES  (:contenu,:id_article,:id_membre)  ";
+                 echo'1';
         $stmt=$this->database->getConnection()->prepare($query);
+        echo'2';
+
         $stmt->bindParam(':contenu',$contenu,PDO::PARAM_STR);
-        $stmt->bindParam(':id_article',$id_article,PDO::PARAM_STR);
-        $stmt->bindParam(':id_membre',$id_membre,PDO::PARAM_STR);
+        $stmt->bindParam(':id_article',$id_article,PDO::PARAM_INT);
+        $stmt->bindParam(':id_membre',$id_membre,PDO::PARAM_INT);
+        echo'3';
 
         try {
             $stmt->execute();
         } catch (PDOException $e) {
             throw new PDOException($e->getMessage(), (int)$e->getCode());
         }
-
-
     }
+    public function showComment($id_article){
+
+            $stmt=$this->database->getConnection()->prepare("SELECT commentaires.contenu,commentaires.date_soumission ,article.titre,users.nom,users.prenom
+                                                              FROM commentaires
+                                                              JOIN article ON article.id_article=commentaires.id_article
+                                                              JOIN users ON users.id_user=commentaires.id_membre
+                                                              WHERE commentaires.statut='Accepté' AND article.id_article=:id_article");
+
+            $stmt->bindParam(':id_article',$id_article,PDO::PARAM_INT);
+
+             try {
+                $stmt->execute();
+            
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                if (count($result) > 0) {
+                    return $result; 
+                } else {
+                    throw new Exception('Aucun commentaires à approuver.');
+                }
+            } catch (PDOException $e) {
+                throw new PDOException($e->getMessage(), (int)$e->getCode());
+            }
+    
+    }
+
+
+
+
+    public function accepteComment($id_comment){
+
+        $stmt=$this->database->getConnection()->prepare("UPDATE commentaires
+                                                          SET commentaires.statut='Accepté'
+                                                          WHERE commentaires.id_comment= :id_comment ;");
+        $stmt->bindParam(':id_comment',$id_comment,PDO::PARAM_STR);
+
+         
+         try {
+            $stmt->execute();
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage(), (int)$e->getCode());
+        }
+
+}
+public function refuseComment($id_comment){
+
+    $stmt=$this->database->getConnection()->prepare("UPDATE commentaires
+                                                      SET commentaires.statut='Refusé'
+                                                      WHERE commentaires.id_comment= :id_comment ;");
+             $stmt->bindParam(':id_comment',$id_comment,PDO::PARAM_STR);
+
+     try {
+        $stmt->execute();
+    } catch (PDOException $e) {
+        throw new PDOException($e->getMessage(), (int)$e->getCode());
+    }
+
+}
+
+
+
+
+
 
 }
