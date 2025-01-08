@@ -180,7 +180,6 @@ if (!isAuth('membre')) {
                         <br>
 
 
-         < pre class="text-gray-800 mb-2 ">'.nl2br(htmlspecialchars($row['contenu'])).'</pre>  ;
 
       
     </div>
@@ -188,19 +187,30 @@ if (!isAuth('membre')) {
                     }
                 }
                 echo'<div class="m-4 flex items-center gap-2">
-                <a href="../functions/addLike.php?id='.$id_article.'">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded flex items-center gap-2">
+                <a href="../functions/addLike.php?id='.$id_article.'">';
+                
+                  require_once '../classes/favoris.php';
+                    $showLikes=new Favoris("","");
+                    $Likes=$showLikes->showLikes($id_article);
+               echo' <button class="bg-blue-500 text-white px-4 py-2 rounded flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
                     </svg>
-                    42 J\'aime
-                </button>
+                  
+
+                  '.$Likes['likescount'] .' J\'aimes
+                   
+               </button>
                 </a>
                 
             </div>'
                 ?>
 
             </div>
+
+
+            <!-- < pre class="text-gray-800 mb-2 ">'.nl2br(htmlspecialchars($row['contenu'])).'</pre>  ; -->
+
             <!-- Section likes -->
             
 
@@ -279,123 +289,4 @@ if (!isAuth('membre')) {
     </footer>
 
 
-    <div class="max-w-4xl mx-auto px-4 py-8">
-        <!-- En-tête de l'article -->
-        <div class="mb-8">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">Comment créer une application web moderne en 2024</h1>
-
-            <div class="flex items-center gap-4 mb-6">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-12 h-12 rounded-full" alt="Author">
-                <div>
-                    <p class="font-semibold text-gray-900">Thomas Martin</p>
-                    <p class="text-gray-500 text-sm">Publié le 15 janvier 2024</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Image principale -->
-        <div class="mb-8">
-            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6"
-                class="w-full h-[400px] object-cover rounded-xl shadow-lg"
-                alt="Article cover">
-        </div>
-
-        <!-- Contenu de l'article -->
-        <div class="prose max-w-none mb-12">
-            <p class="text-lg text-gray-700 leading-relaxed mb-6">
-                Le développement web moderne nécessite une approche holistique qui prend en compte à la fois les performances,
-                l'expérience utilisateur et la maintenabilité du code. Dans cet article, nous explorerons les meilleures
-                pratiques actuelles...
-            </p>
-
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">1. Les fondamentaux</h2>
-            <p class="text-gray-700 mb-6">
-                Avant de se lancer dans le développement, il est crucial de bien comprendre les bases.
-                Cela inclut une solide connaissance de HTML, CSS et JavaScript...
-            </p>
-
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">2. Les frameworks modernes</h2>
-            <p class="text-gray-700 mb-6">
-                React, Vue et Angular dominent actuellement le paysage du développement frontend.
-                Chacun a ses forces et ses cas d'utilisation spécifiques...
-            </p>
-        </div>
-
-        <!-- Section Likes et Partage -->
-        <div class="border-t border-b border-gray-200 py-6 mb-8">
-            <div class="flex items-center gap-6">
-                <button class="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-                        </path>
-                    </svg>
-                    <span class="font-medium">128 likes</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Section Commentaires -->
-        <div class="mb-8">
-            <h3 class="text-2xl font-bold mb-6">Commentaires (3)</h3>
-
-            <!-- Formulaire de commentaire -->
-            <div class="mb-8">
-                <textarea
-                    class="w-full p-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    rows="4"
-                    placeholder="Ajouter un commentaire..."></textarea>
-                <button class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                    Publier
-                </button>
-            </div>
-
-            <!-- Liste des commentaires -->
-            <div class="space-y-6">
-                <!-- Commentaire 1 -->
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <div class="flex items-center gap-4 mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg"
-                            class="w-10 h-10 rounded-full" alt="Commenter">
-                        <div>
-                            <p class="font-semibold">Sophie Bernard</p>
-                            <p class="text-sm text-gray-500">Il y a 2 heures</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700">Excellent article ! Les explications sont très claires et pertinentes.</p>
-                </div>
-
-                <!-- Commentaire 2 -->
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <div class="flex items-center gap-4 mb-4">
-                        <img src="https://randomuser.me/api/portraits/men/46.jpg"
-                            class="w-10 h-10 rounded-full" alt="Commenter">
-                        <div>
-                            <p class="font-semibold">Marc Dubois</p>
-                            <p class="text-sm text-gray-500">Il y a 5 heures</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700">Très instructif, j'ai beaucoup appris. Merci pour le partage !</p>
-                </div>
-
-                <!-- Commentaire 3 -->
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <div class="flex items-center gap-4 mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/22.jpg"
-                            class="w-10 h-10 rounded-full" alt="Commenter">
-                        <div>
-                            <p class="font-semibold">Julie Martin</p>
-                            <p class="text-sm text-gray-500">Il y a 1 jour</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700">Pourriez-vous faire un article sur les tests unitaires aussi ?</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <script src="js/main.js"></script>
-</body>
-
-</html>
+    </html>

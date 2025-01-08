@@ -32,6 +32,11 @@ private $database;
 
 
    public function addLikes($id_article,$id_membre){
+
+
+ 
+
+
     $stmt=$this->database->getConnection()->prepare('INSERT into favoris (`id_article`,`id_membre`)
 VALUES (:id_article,:id_membre);');
 $stmt->bindParam(':id_article',$id_article);
@@ -42,7 +47,41 @@ try {
 } catch (PDOException $e) {
     throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
+    
    }
+
+
+
+
+
+   public function showLikes($id_article){
+    $stmt=$this->database->getConnection()->prepare('SELECT COUNT(*) AS likescount FROM favoris WHERE id_article=:id_article ');
+$stmt->bindParam(':id_article',$id_article);
+
+try {
+    $stmt->execute();
+    $row= $stmt->fetch(PDO::FETCH_ASSOC);
+   if (($row)>0){
+    return $row;
+   }
+   else {
+     echo '0';  
+   }
+} catch (PDOException $e) {
+    throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
+   }
+
+}
+
+
+
+
+
+
+
+
+
+
 
 ?>

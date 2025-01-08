@@ -8,7 +8,8 @@ $id_membre=$_SESSION['user_id']    ;
 
 
 $addLike->addLikes($id_article,$id_membre);
-header('Location: ../views/details.php');
+
+header('Location: ../views/details.php?id='.$id_article);
 
 
 ?>
