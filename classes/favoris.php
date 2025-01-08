@@ -34,7 +34,13 @@ private $database;
    public function addLikes($id_article,$id_membre){
 
 
- 
+    $query = "SELECT COUNT(*) FROM favoris WHERE id_article = :id_article AND id_membre = :id_membre";
+    $stmt = $this->database->getConnection()->prepare($query);
+    $stmt->execute(['id_article' => $id_article, 'id_membre' => $id_membre]);
+    
+    if ($stmt->fetchColumn() > 0) {
+        return "Cet article est déjà dans les favoris de l'utilisateur.";
+    } else {
 
 
     $stmt=$this->database->getConnection()->prepare('INSERT into favoris (`id_article`,`id_membre`)
@@ -47,7 +53,7 @@ try {
 } catch (PDOException $e) {
     throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
-    
+    }
    }
 
 
