@@ -102,6 +102,7 @@ else {
                         foreach ($rows as $row) {
                             $image = $row['image'];
                             $id_article = $row['id_article'];
+                            $firstLine = strtok($row['contenu'], "\n");
                             echo '  
                             <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn" data-category="' . htmlspecialchars($row['categorieTitre']) . '">
                                 <div class="relative">
@@ -119,6 +120,7 @@ else {
                                         <span>50 vues</span>
                                     </div>
                                     <h3 class="text-xl font-bold text-gray-800 mb-2">' . htmlspecialchars($row['articleTitre']) . '</h3>
+
                                     <div class="flex items-center justify-between">
                                         <span class="text-sm text-gray-600">Par ' . htmlspecialchars($row['nom']) . ' ' . htmlspecialchars($row['prenom']) . '</span>
                                         <a href="./details.php?id=' . htmlspecialchars($id_article) . '">

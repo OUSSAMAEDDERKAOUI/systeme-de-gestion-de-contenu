@@ -175,24 +175,34 @@ if (!isAuth('membre')) {
     </div>
           <pre class="text-gray-800 mb-2 whitespace-pre-line">' . $row['contenu'] . '
         </pre>
-        
+        <br>
+                <br>
+                        <br>
+
+
+         < pre class="text-gray-800 mb-2 ">'.nl2br(htmlspecialchars($row['contenu'])).'</pre>  ;
+
       
     </div>
 </article> ';
                     }
                 }
-                ?>
-
-            </div>
-            <!-- Section likes -->
-            <div class="m-4 flex items-center gap-2">
+                echo'<div class="m-4 flex items-center gap-2">
+                <a href="../functions/addLike.php?id='.$id_article.'">
                 <button class="bg-blue-500 text-white px-4 py-2 rounded flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
                     </svg>
-                    42 J'aime
+                    42 J\'aime
                 </button>
+                </a>
+                
+            </div>'
+                ?>
+
             </div>
+            <!-- Section likes -->
+            
 
             <!-- Section commentaires -->
             <div class="comments-section mt-8">
@@ -212,20 +222,27 @@ if (!isAuth('membre')) {
                 <!-- Liste des commentaires -->
                 <div class="space-y-4">
                     <?php
+                                    require_once '../classes/comentaires.php';
 
-                    $membre->showComment($id_article);
-                    
-                    echo '<div class="bg-gray-50 p-6 rounded-lg">
+                $comment = new Commentaire("", "", "", "", "", "");
+
+                   $rows = $comment->showComment($id_article);
+                   if($rows >0){
+                    foreach($rows as $row){
+                        echo '<div class="bg-gray-50 p-6 rounded-lg">
                         <div class="flex items-center gap-4 mb-4">
                             <img src="https://randomuser.me/api/portraits/men/46.jpg"
                                 class="w-10 h-10 rounded-full" alt="Commenter">
                             <div>
-                                <p class="font-semibold">Marc Dubois</p>
-                                <p class="text-sm text-gray-500">Il y a 5 heures</p>
+                                <p class="font-semibold">'.$row['prenom'].' '.$row['nom'].'</p>
+                                <p class="text-sm text-gray-500">'.$row['date_soumission'].'</p>
                             </div>
                         </div>
-                        <p class="text-gray-700">comment</p>
+                        <p class="text-gray-700">'.$row['contenu'].'</p>
                     </div>';
+                       }
+                   }
+                
                     ?>
                 </div>
             </div>

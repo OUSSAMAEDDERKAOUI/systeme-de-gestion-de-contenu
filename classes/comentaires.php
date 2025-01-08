@@ -77,5 +77,60 @@ class Commentaire {
     public function setDatabase($database) {
         $this->database = $database;
     }
+
+
+    public function showComment($id_article){
+
+        $stmt=$this->database->getConnection()->prepare("SELECT commentaires.contenu,commentaires.date_soumission ,article.titre,users.nom,users.prenom
+                                                          FROM commentaires
+                                                          JOIN article ON article.id_article=commentaires.id_article
+                                                          JOIN users ON users.id_user=commentaires.id_membre
+                                                          WHERE commentaires.statut='Accepté' AND article.id_article=:id_article");
+
+        $stmt->bindParam(':id_article',$id_article,PDO::PARAM_INT);
+
+         try {
+            $stmt->execute();
+        
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            if (count($result) > 0) {
+                return $result; 
+            } else {
+                echo'Aucun commentaires .';
+            }
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage(), (int)$e->getCode());
+        }
+
+}
+
+
+
+public function showReviewComment(){
+
+    $stmt=$this->database->getConnection()->prepare("SELECT commentaires.id_comment,commentaires.contenu,commentaires.date_soumission ,article.titre,users.nom,users.prenom
+                                                      FROM commentaires
+                                                      JOIN article ON article.id_article=commentaires.id_article
+                                                      JOIN users ON users.id_user=commentaires.id_membre
+                                                      WHERE commentaires.statut='En Attente' ");
+
+
+     try {
+        $stmt->execute();
+    
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        if (count($result) > 0) {
+            return $result; 
+        } else {
+            echo'Aucun commentaires .';
+        }
+    } catch (PDOException $e) {
+        throw new PDOException($e->getMessage(), (int)$e->getCode());
+    }
+
+}
+
 }
 ?>

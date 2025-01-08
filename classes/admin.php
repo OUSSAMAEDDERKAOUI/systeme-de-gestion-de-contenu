@@ -140,10 +140,17 @@ public function rejectedArticle(){
 return $result;
 }
 
+public function PendingArticle(){
+    $stmt = $this->database->getConnection()->prepare("SELECT COUNT(article.id_article) AS nbr_article FROM `article` WHERE article.statut='en attente'");
+    $stmt->execute(); 
+    $result=$stmt->fetch(PDO::FETCH_ASSOC);
+return $result;
+}
+
 
 public function show_article() {
     $stmt = $this->database->getConnection()->prepare("SELECT article.titre AS titreArticle,categorie.titre AS titreCategorie,article.date_publication,article.id_article, users.nom,users.prenom FROM article JOIN users ON article.id_auteur=users.id_user JOIN categorie ON categorie.id_categorie=article.id_categorie
-WHERE article.statut='annuler'");
+WHERE article.statut='en attente'");
 
     try {
         $stmt->execute();
@@ -153,7 +160,7 @@ WHERE article.statut='annuler'");
         if (!empty($result)) {
             return $result;  
         } else {
-            throw new Exception("Aucun article trouvé.");  
+            echo "Aucun article trouvé.";  
         }
         
     } catch (PDOException $e) {
@@ -186,9 +193,42 @@ SET article.statut='confirmer'
 
 
 
+
+public function accepteComment($id_comment){
+
+    $stmt=$this->database->getConnection()->prepare("UPDATE commentaires
+                                                      SET commentaires.statut='Accepté'
+                                                      WHERE commentaires.id_comment= :id_comment ;");
+    $stmt->bindParam(':id_comment',$id_comment,PDO::PARAM_STR);
+
+     
+     try {
+        $stmt->execute();
+    } catch (PDOException $e) {
+        throw new PDOException($e->getMessage(), (int)$e->getCode());
+    }
+
+}
+public function refuseComment($id_comment){
+
+$stmt=$this->database->getConnection()->prepare("UPDATE commentaires
+                                                  SET commentaires.statut='Refusé'
+                                                  WHERE commentaires.id_comment= :id_comment ;");
+         $stmt->bindParam(':id_comment',$id_comment,PDO::PARAM_STR);
+
+ try {
+    $stmt->execute();
+} catch (PDOException $e) {
+    throw new PDOException($e->getMessage(), (int)$e->getCode());
+}
+
+}
+
+
+
+
 }
     
-
 
 
 // ajouter id_users au tableau categorie
