@@ -251,7 +251,29 @@ public function showModifyArticle($id_article) {
 
 
 
+public function showTag() {
+    $stmt = $this->database->getConnection()->prepare("SELECT DISTINCT tags.nom_tag ,id_tag FROM tags ");
 
+    try {
+        $stmt->execute();
+        
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($result)) {
+            return $result;  
+        } else {
+            throw new Exception("Aucun tag trouvé.");  
+        }
+        
+    } catch (PDOException $e) {
+        echo "Erreur de base de données : " . $e->getMessage();
+        return null; 
+    } catch (Exception $e) {
+
+        echo "Erreur : " . $e->getMessage();
+        return null;  
+    }
+}
 
 
 

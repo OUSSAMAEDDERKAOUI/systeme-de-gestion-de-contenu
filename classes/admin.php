@@ -224,6 +224,74 @@ $stmt=$this->database->getConnection()->prepare("UPDATE commentaires
 
 }
 
+public function addTag($nom_tag,$id_admin){
+    $stmt=$this->database->getConnection()->prepare('SELECT tags.nom_tag FROM tags WHERE tags.nom_tag =:nom_tag ');
+    $stmt->bindParam(':nom_tag',$nom_tag,PDO::PARAM_STR);
+    try {
+        $stmt->execute();
+        $result=$stmt->fetchAll();
+        if(!empty($result)){
+            echo'tag deja existe .';
+        }
+        else{
+            $stmt=$this->database->getConnection()->prepare('INSERT INTO `tags`(`nom_tag`, `date_creation`, `id_admin`) VALUES (:nom_tag,CURRENT_DATE,:id_admin)');
+            $stmt->bindParam(':nom_tag',$nom_tag,PDO::PARAM_STR);
+            $stmt->bindParam(':id_admin',$id_admin,PDO::PARAM_INT);
+        
+           try {
+            $stmt->execute();
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage(), (int)$e->getCode());
+        }
+        }
+    } catch (PDOException $e) {
+        throw new PDOException($e->getMessage(), (int)$e->getCode());
+    }
+
+   
+}
+
+
+
+public function showTag() {
+    $stmt = $this->database->getConnection()->prepare("SELECT * FROM tags join users on tags.id_admin=users.id_user ");
+
+    try {
+        $stmt->execute();
+        
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($result)) {
+            return $result;  
+        } else {
+            throw new Exception("Aucun categorie trouvé.");  
+        }
+        
+    } catch (PDOException $e) {
+        echo "Erreur de base de données : " . $e->getMessage();
+        return null; 
+    } catch (Exception $e) {
+
+        echo "Erreur : " . $e->getMessage();
+        return null;  
+    }
+}
+
+public function deletetag($id_tag){
+    $query ="DELETE FROM `tags`
+            WHERE id_tag =:id_tag";  
+    $stmt = $this->database->getConnection()->prepare($query)   ;
+    echo'1';
+    $stmt->bindValue( ':id_tag' , $id_tag ,PDO::PARAM_INT)  ;
+    echo'2';
+
+    try {
+        $stmt->execute();
+    } catch (PDOException $e) {
+        throw new PDOException($e->getMessage(), (int)$e->getCode());
+    }
+}
+
 
 
 

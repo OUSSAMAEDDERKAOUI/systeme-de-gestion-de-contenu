@@ -43,7 +43,7 @@ else {
                     Dashboard
                 </div>
                 <div id="category_button" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200 cursor-pointer">
-                    Catégories
+                    Catégories et tags
                 </div>
                 <div id="Article_button" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200 cursor-pointer">
                     Articles
@@ -479,6 +479,28 @@ else {
                     </form>
                 </div>
 
+
+                <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 mb-8 hover:shadow-2xl transition-all duration-300">
+                    <h2 class="text-xl font-semibold mb-6 text-gray-800">Créer nouvelle Tag</h2>
+                    <form id="articleForm" class="space-y-6" action="../functions/addtag.php" method="POST">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                            <input type="text" required name="tag"
+                                class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
+                                placeholder="Entrer le titre de la nouvelle tag">
+                        </div>
+                        <button
+
+                            type="submit" name="addTag"
+                            class="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-200 font-medium">
+                            Ajouter la nouvelle tag
+                        </button>
+                    </form>
+                </div>
+
+
+
+
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h3 class="text-lg font-semibold mb-4">Toutes les categories</h3>
                     <div class="space-y-4">
@@ -498,6 +520,39 @@ else {
                                 </div>
                                 <div class="flex space-x-2">
                                 <a href="../functions/removeCategory.php?id='. htmlspecialchars($id_category) .' ">
+                                    <button 
+                                        class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
+                                        Rejeter
+                                    </button>
+                                </a>
+                                    
+                                </div>
+                            </div>';
+                            }
+                        }
+
+                        ?>
+
+                    </div>
+
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold mb-4">Toutes les tags</h3>
+                    <div class="space-y-4">
+                        <?php
+                        $result = $admin->showTag();
+                        if ($result) {
+                            foreach ($result as $row) {
+                                $id_tag= $row['id_tag'];
+                                echo '<div class="flex items-center justify-between border-b pb-2">';
+                                echo "<div>
+                                    <h4 class='font-medium'>" . $row['nom_tag'] . "</h4>";
+                                echo '  <p class="text-sm text-gray-500">
+                                        Par ' . $row["prenom"] . ' ' . $row["nom"] . '    •   ' . $row["date_creation"] . '
+                                    </p>
+                                </div>
+                                <div class="flex space-x-2">
+                                <a href="../functions/removetag.php?id='. htmlspecialchars($id_tag) .' ">
                                     <button 
                                         class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
                                         Rejeter

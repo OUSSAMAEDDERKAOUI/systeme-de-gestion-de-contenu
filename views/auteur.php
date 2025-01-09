@@ -250,7 +250,7 @@ else {
                                 $auteur->showCategory();
                                 $rows = $auteur->showCategory();
                                 echo '  <select 
-                              required name="category"
+                              required name="category" 
                               class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
                             >';
                                 foreach ($rows as $row) {
@@ -270,6 +270,27 @@ else {
                                         rows="8"
                                         class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
                                         placeholder="Write your article content here..."></textarea>
+                                </div>
+                                
+                                <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Categorie</label>
+                                <?php
+                            //     $auteur->showTag();
+                            //     $rows = $auteur->showTag();
+                            //     echo '  <select 
+                            //   required name="tag" 
+                            //   class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
+                            // >';
+                            //     foreach ($rows as $row) {
+                            //         $id_tag = $row['id_tag'];
+                            //         echo '<option value="' . htmlspecialchars($id_tag) . ' ">' . $row['nom_tag'] . '</option>';
+                            //     }
+
+
+                            //     echo '</select>
+                            // </div>';
+
+                                ?>
                                 </div>
                                 <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">image</label>
