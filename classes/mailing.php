@@ -36,7 +36,7 @@ if (!class_exists('Mailing')) {
                 $mail->SMTPDebug = 0; 
 
                 // Recipients
-                $mail->setFrom($mail->Username, 'CultureConnect');
+                $mail->setFrom($mail->Username, 'MelodyHub');
                 $mail->addAddress($this->usermail, $this->username);
 
                 // Content

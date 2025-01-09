@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
         $password = $_POST['password'];
 
-        $membre = new Membre("", $nom, $prenom, $email, $password, $role);
+        $membre = new Membre("", "", "", "", "", "");
         $subject = 'Bienvenue sur MelodyHub';
         $body = "Bonjour $prenom $nom,<br><br>Merci de vous être inscrit sur MelodyHub. Nous sommes ravis de vous accueillir !";
 
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Veuillez remplir tous les champs du formulaire.";
     }
 }
-    //   header('Location: ../views/login.php')
+      header('Location: ../views/login.php')
 
 
 
