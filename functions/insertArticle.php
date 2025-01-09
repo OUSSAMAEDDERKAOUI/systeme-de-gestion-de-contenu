@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once '../classes/article.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['insert'])) {
@@ -8,10 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $content = $_POST['content'];
         $id_auteur = $_SESSION['user_id'];
         $upload_img = $_FILES['image'];
+        $tags = $_POST['tag']; 
+
 
         if (!empty($titre) && !empty($id_category) && !empty($content)) {
 
-            require_once '../classes/article.php';
 
             $article = new Article("", "", "", "", "", "", "");
             try {

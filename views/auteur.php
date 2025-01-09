@@ -273,25 +273,22 @@ else {
                                 </div>
                                 
                                 <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Categorie</label>
-                                <?php
-                            //     $auteur->showTag();
-                            //     $rows = $auteur->showTag();
-                            //     echo '  <select 
-                            //   required name="tag" 
-                            //   class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-200"
-                            // >';
-                            //     foreach ($rows as $row) {
-                            //         $id_tag = $row['id_tag'];
-                            //         echo '<option value="' . htmlspecialchars($id_tag) . ' ">' . $row['nom_tag'] . '</option>';
-                            //     }
+    <label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
+    <?php
+    $rows = $auteur->showTag(); // Récupérer les tags
+    if ($rows) {
+        foreach ($rows as $row) {
+            $id_tag = $row['id_tag'];
+            $nom_tag = htmlspecialchars($row['nom_tag']);
+            echo '<div class="flex items-center mb-2">';
+            echo '<input type="checkbox" name="tag[]" value="' . $id_tag . '" id="tag' . $id_tag . '" class="mr-2">';
+            echo '<label for="tag' . $id_tag . '" class="text-sm text-gray-700">' . $nom_tag . '</label>';
+            echo '</div>';
+        }
+    }
+    ?>
+</div>
 
-
-                            //     echo '</select>
-                            // </div>';
-
-                                ?>
-                                </div>
                                 <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">image</label>
                                 <input

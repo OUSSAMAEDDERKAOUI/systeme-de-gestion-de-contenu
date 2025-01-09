@@ -41,7 +41,6 @@ class Article {
         $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
         $this->upload_img = "../upload/" . $unique_image;
         
-        // Tentez de déplacer le fichier
         if (!move_uploaded_file($file_temp, $this->upload_img)) {
             throw new Exception("Échec du téléchargement de l'image.");
         }
@@ -49,28 +48,40 @@ class Article {
         throw new Exception("Aucune image à télécharger ou une erreur est survenue.");
     }
 
-    // Préparer la requête d'insertion
     $query = "INSERT INTO article (titre, date_publication, contenu, id_categorie, id_auteur, image)
               VALUES (:titre, CURRENT_DATE, :contenu, :id_categorie, :id_auteur, :upload_img)";
 
     $stmt = $this->database->getConnection()->prepare($query);
 
-    // Lier les paramètres
     $stmt->bindValue(':titre', $titre, PDO::PARAM_STR);
     $stmt->bindValue(':contenu', $contenu, PDO::PARAM_STR);
     $stmt->bindValue(':id_categorie', $id_categorie, PDO::PARAM_INT);
     $stmt->bindValue(':id_auteur', $id_auteur, PDO::PARAM_INT);
-    $stmt->bindValue(':upload_img', $this->upload_img, PDO::PARAM_STR); // Utilisez ici le chemin de l'image
+    $stmt->bindValue(':upload_img', $this->upload_img, PDO::PARAM_STR); 
 
-    // Essayer d'exécuter la requête
     try {
         $stmt->execute();
     } catch (PDOException $e) {
         throw new PDOException($e->getMessage(), (int)$e->getCode());
     }
-}
+    $id_article=$this->database->getConnection()->lastInsertId();
+    $tags = $_POST['tag'];
+    $stmt = $this->database->getConnection()->prepare("INSERT INTO article_tag (id_article, id_tag) VALUES (:id_article, :id_tag)");
+
+    foreach ($tags as $id_tag) {
+        $stmt->bindParam(':id_article', $id_article, PDO::PARAM_INT);
+        $stmt->bindParam(':id_tag', $id_tag, PDO::PARAM_INT);
+
+        try {
+            $stmt->execute();
+            echo "Tag ID $id_tag inséré avec succès.<br>";
+        } catch (PDOException $e) {
+            echo "Erreur lors de l'insertion du tag ID $id_tag : " . $e->getMessage() . "<br>";
+        }
 
 }
 
+}
+}
 
 ?>
