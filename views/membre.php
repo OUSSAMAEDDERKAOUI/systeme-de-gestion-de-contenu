@@ -108,6 +108,7 @@ $image_user= $_SESSION['user_image'];
                     if (is_array($rows) && count($rows) > 0) {
                         foreach ($rows as $row) {
                             $image = $row['image'];
+                            $image_auteur = $row['image_auteur'];
                             $id_article = $row['id_article'];
                             $firstLine = strtok($row['contenu'], "\n");
                             echo '  
@@ -134,15 +135,19 @@ $image_user= $_SESSION['user_image'];
                                if(count($rows) > 0){
                                 echo'<div class="flex  text-center gap-2 m-4 gap-2 m-4">';
                                 foreach($rows as $result){
-                                   echo' <div class="px-3 py-1  text-blue-600 rounded-full text-sm"># '.$result['nom_tag'].'</div>';
+                                   echo' <div class="px-3 py-1  text-blue-600 rounded-full text-sm">                         
+
+                                   # '.$result['nom_tag'].'</div>';
                                 }
                                 echo'</div>';
 
                                }
 
 
-                                   echo' <div class="flex items-center justify-between">
-                                        <span class="text-sm text-gray-600">Par ' . htmlspecialchars($row['nom']) . ' ' . htmlspecialchars($row['prenom']) . '</span>
+                                   echo' <div class="flex items-center gap-16">
+                                               <img src="'.htmlspecialchars($image_user).'" class="w-12 h-12 rounded-full" alt="Author">
+
+                                        <span class="text-sm text-gray-600">  Par ' . htmlspecialchars($row['nom']) . ' ' . htmlspecialchars($row['prenom']) . '</span>
                                         <a href="./details.php?id=' . htmlspecialchars($id_article) . '">
                                             <button class="text-purple-600 hover:text-purple-700">
                                                 Voir tout <i class="fas fa-arrow-right ml-1"></i>

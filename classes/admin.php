@@ -149,7 +149,7 @@ return $result;
 
 
 public function show_article() {
-    $stmt = $this->database->getConnection()->prepare("SELECT article.titre AS titreArticle,categorie.titre AS titreCategorie,article.date_publication,article.id_article, users.nom,users.prenom FROM article JOIN users ON article.id_auteur=users.id_user JOIN categorie ON categorie.id_categorie=article.id_categorie
+    $stmt = $this->database->getConnection()->prepare("SELECT article.titre AS titreArticle,categorie.titre AS titreCategorie,article.date_publication,article.id_article, users.nom,users.prenom,users.image FROM article JOIN users ON article.id_auteur=users.id_user JOIN categorie ON categorie.id_categorie=article.id_categorie
 WHERE article.statut='en attente'");
 
     try {

@@ -13,6 +13,8 @@ else {
 
 }
 }
+$image_user= $_SESSION['user_image'];
+
 ?>
 
 
@@ -23,7 +25,7 @@ else {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Auteur - CultureConnect</title>
+    <title>Dashboard Auteur - MelodyHub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -40,9 +42,14 @@ else {
                         <i class="fas fa-feather-alt text-xl"></i>
                     </div>
                     <div>
+                    <div class="relative">
+                      
+                        <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-400 border-2 border-white"></div>
+                    </div>
                         <h1 class="text-xl font-bold">MelodyHub</h1>
                         <p class="text-purple-300 text-sm">Espace Auteur</p>
                     </div>
+                   
                 </div>
             </div>
 
@@ -94,7 +101,12 @@ else {
                                 <i class="fas fa-bell text-xl"></i>
                             </button>
                             <div class="relative">
-                               
+                            <?php
+                        echo'<img src="'. htmlspecialchars($image_user).'"
+                    
+                            alt="Profile"
+                            class="h-10 w-10 rounded-full object-cover">';
+                            ?>
                                 <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-400 border-2 border-white"></div>
                             </div>
                         </div>

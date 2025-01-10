@@ -43,10 +43,10 @@ else {
                     Dashboard
                 </div>
                 <div id="category_button" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200 cursor-pointer">
-                    Catégories et tags
+                    Catégories et Tags
                 </div>
                 <div id="Article_button" class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200 cursor-pointer">
-                    Articles
+                    Articles et Commentaires
                 </div>
                 <div id="auteur_button"  class="block py-3 px-6 hover:bg-gray-800 transition-colors duration-200 cursor-pointer">
                     Auteurs
@@ -163,27 +163,21 @@ else {
                     </section>
 
 <section class="hidden" id="article">
-<div class="w-[70%] ml-[15%] mb-8">
-<div class="bg-white shadow-sm">
 
-        <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center">
-                <h1 class="text-2xl font-bold text-gray-900">Articles en Attente de Validation</h1>
-                <div class="flex items-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="8" x2="12" y2="12"></line>
-                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                    </svg>
-                </div>
-            </div>
+    <!-- ------------------------------------ ARTICLE ET CommentaireS--------------------------------------------------- -->
+     
+<section class="max-w-7xl mx-auto p-6 bg-white my-16">
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-slate-800">Articles en attente de validation</h2>
+            <p class="text-slate-600">8 articles nécessitent votre attention</p>
         </div>
-    </div>
-                        <!-- Articles en Attente -->
-                        <div class="bg-white rounded-lg shadow-md p-6 ">
-                            <h3 class="text-lg font-bold bold mb-4 text-gray-900"></h3>
-                            <div class="space-y-4">
-                                <?php
+
+        <!-- Liste des articles -->
+        <div class="space-y-4">
+            <!-- Article 1 -->
+
+
+            <?php
                                 require_once '../classes/admin.php';
                                 $admin = new Admin("", "", "", "", "", "","");
                                 $rows = $admin->show_article();
@@ -191,14 +185,24 @@ else {
                                     foreach ($rows as $row) {
                                         $id_article = $row['id_article'];
                                         echo ' <div class="flex flex-column items-center justify-between border-b pb-2">
+                                       
+                                <div class="flex gap-4">
                                 <div>
-                                    <h4 class="font-medium">' . $row['titreArticle'] . '</h4>
+                                 <img src="' . $row["image"] . '" 
+                                 alt="Author" 
+                                 class="w-12 h-12 rounded-full object-cover">
+                                </div>
+                                 
+                                 <div>
+                                  <h4 class="font-medium">' . $row['titreArticle'] . '</h4>
                                     <p class="text-sm text-gray-500">
                                       par ' . $row["prenom"] . ' ' . $row["nom"] . '   •   
                                        ' . $row['titreCategorie'] . ' •
                                        ' . $row['date_publication'] . '
                                         
                                     </p>
+                                 </div>
+                                   
                                 </div>';
                                 require_once '../classes/article_tag.php';
                                 $TagArticle=new TagArticle("","");
@@ -216,7 +220,7 @@ else {
                                         echo ' <div class="flex space-x-2">
                               <a href="../functions/approuveArticle.php?id=' . htmlspecialchars($id_article) . '">
                               <button 
-                                        class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">
+                                         class="px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors">
                                         Approuver
                                     </button>
                               </a>
@@ -227,11 +231,11 @@ else {
                                     }
                                 }
                                 ?>
-                            </div>
 
-                        </div>
 
-                    </div>
+
+        </div>
+    </section>
 
 
                     <!-- comments -->
@@ -338,57 +342,7 @@ else {
 
 <!-- ----------------------------------- nouveau affichage de validation des article ---------------------------------------------- -->
 
-        <section class="max-w-7xl mx-auto p-6">
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold text-slate-800">Articles en attente de validation</h2>
-            <p class="text-slate-600">8 articles nécessitent votre attention</p>
-        </div>
-
-        <!-- Liste des articles -->
-        <div class="space-y-4">
-            <!-- Article 1 -->
-
-
-
-
-            
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-                <div class="flex justify-between items-start">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-4 mb-4">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop" 
-                                 alt="Author" 
-                                 class="w-12 h-12 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-slate-800">Thomas Durant</h3>
-                                <p class="text-sm text-slate-500">Soumis le 15 Mars 2024</p>
-                            </div>
-                        </div>
-                        <h4 class="text-xl font-semibold text-slate-900 mb-2">
-                            Les meilleures pratiques en React 2024
-                        </h4>
-                        <p class="text-slate-600 mb-4 line-clamp-2">
-                            Une exploration approfondie des patterns modernes et des optimisations de performance...
-                        </p>
-                        <div class="flex gap-2 mb-4">
-                            <span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm">React</span>
-                            <span class="px-3 py-1 bg-purple-50 text-purple-600 rounded-full text-sm">Performance</span>
-                        </div>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors">
-                            Approuver
-                        </button>
-                        <button class="px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors">
-                            Refuser
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </section>
-
+        
 
 <!-- ----------------------------------- nouveau affichage de validation des article ---------------------------------------------- -->
 
@@ -449,7 +403,7 @@ else {
 
 
 
-                <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="bg-white rounded-lg shadow-md p-6 my-16">
                     <h3 class="text-lg font-semibold mb-4">Toutes les categories</h3>
                     <div class="space-y-4">
                         <?php
