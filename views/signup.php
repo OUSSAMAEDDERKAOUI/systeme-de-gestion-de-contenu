@@ -24,7 +24,7 @@
                 </h2>
                
             </div>
-            <form id="registerForm" class="mt-8 space-y-6" action="../functions/signup.php" method="POST">
+            <form id="registerForm" class="mt-8 space-y-6" action="../functions/signup.php" method="POST" enctype="multipart/form-data">
                 <div class="rounded-md shadow-sm flex flex-col gap-5">
                     <div>
                         <label for="prenom" class="sr-only">Prenom</label>

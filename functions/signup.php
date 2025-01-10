@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password = $_POST['password'];
         $upload_img = $_FILES['image'];
 
-        $membre = new Membre("", "", "", "", "", "");
+        $membre = new Membre("", "", "", "", "", "","");
         $subject = 'Bienvenue sur MelodyHub';
         $body = "Bonjour $prenom $nom,<br><br>Merci de vous être inscrit sur MelodyHub. Nous sommes ravis de vous accueillir !";
 

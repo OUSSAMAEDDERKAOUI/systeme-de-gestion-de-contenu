@@ -7,7 +7,7 @@ if (isset($_GET['id']) && isset($_POST['contenu']) && isset($_SESSION['user_id']
     $contenu = htmlspecialchars(trim($_POST['contenu'])); 
     $id_membre = $_SESSION['user_id'];
 
-    $comment = new Membre("", "", "", "", "", "");
+    $comment = new Membre("", "", "", "", "", "","");
     
     $comment->addComment($contenu, $id_article, $id_membre);
     

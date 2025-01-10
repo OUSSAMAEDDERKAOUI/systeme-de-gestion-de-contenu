@@ -6,8 +6,9 @@ class Membre extends Users
 {
     private $upload_img ;
 
-public function __construct($upload_img){
+public function __construct($id_user,$nom ,$prenom,$email,$password,$role,$upload_img){
     $this->upload_img=$upload_img;
+    parent::__construct($id_user,$nom ,$prenom,$email,$password,$role);
    }
 
 
@@ -18,7 +19,6 @@ public function __construct($upload_img){
             echo "Tous les champs sont obligatoires";
         }
         if (isset($upload_img) && $upload_img['error'] === UPLOAD_ERR_OK) {
-            echo'text ok';
             $permited = array('jpg', 'png', 'jpeg', 'gif');
             $file_name = $upload_img['name'];
             $file_size = $upload_img['size'];
@@ -32,6 +32,7 @@ public function __construct($upload_img){
             
             $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
             $this->upload_img = "../upload/" . $unique_image;
+
             
             if (!move_uploaded_file($file_temp, $this->upload_img)) {
                 throw new Exception("Échec du téléchargement de l'image.");
@@ -42,7 +43,10 @@ public function __construct($upload_img){
 
 
         $sql = "SELECT * FROM users WHERE email = :email";
+        echo'text ok';
+
         $stmt = $this->database->getConnection()->prepare($sql);
+
         $stmt->bindParam(":email", $email, PDO::PARAM_STR);
         $stmt->execute();
 
