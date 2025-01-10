@@ -488,6 +488,8 @@ else {
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider text-center font-x-bold">Email</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider text-center font-bold">Les articles Approuvés</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider text-center font-bold">Les articles Rejeter</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider text-center font-bold">Statut</th>
+
 
                                     </tr>
                                 </thead>
@@ -505,6 +507,8 @@ else {
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">' . $row["email"] . ' </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-green-700 text-center font-bold">' . $row["nbr_article_confirmer"] . ' </td>
                                                 <td class="px-6 py-4 text-sm text-red-500 text-center font-bold">' . $row["nbr_article_annuler"] . ' </td>
+                                                <td class="px-6 py-4 text-sm text-green-500 text-center font-bold">' . $row["status"] . ' </td>
+
                                                  
                                             </tr>';
                                         }

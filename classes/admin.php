@@ -88,16 +88,19 @@ public function deleteCategory($id_categorie){
 
 public function showAuteur(){
     $stmt = $this->database->getConnection()->prepare("SELECT 
-    users.nom,users.prenom, users.email,
-    COUNT(CASE WHEN article.statut = 'confirmer' THEN article.id_article END) AS nbr_article_confirmer,
-    COUNT(CASE WHEN article.statut = 'annuler' THEN article.id_article END) AS nbr_article_annuler
-FROM 
-    users 
- JOIN 
-    article ON users.id_user = article.id_auteur
-GROUP BY 
-    users.id_user, users.nom
-");
+        users.nom,
+        users.prenom, 
+        users.email,
+        users.status,
+        COUNT(CASE WHEN article.statut = 'confirmer' THEN article.id_article END) AS nbr_article_confirmer,
+        COUNT(CASE WHEN article.statut = 'annuler' THEN article.id_article END) AS nbr_article_annuler
+    FROM 
+        users 
+    JOIN 
+        article ON users.id_user = article.id_auteur
+    GROUP BY 
+        users.id_user, users.nom, users.prenom, users.email, users.status
+    ");
 
     try {
         $stmt->execute();
@@ -107,18 +110,18 @@ GROUP BY
         if (!empty($result)) {
             return $result;  
         } else {
-            throw new Exception("Aucun categorie trouvé.");  
+            throw new Exception("Aucun auteur trouvé.");  
         }
         
     } catch (PDOException $e) {
         echo "Erreur de base de données : " . $e->getMessage();
         return null; 
     } catch (Exception $e) {
-
         echo "Erreur : " . $e->getMessage();
         return null;  
     }
 }
+
 
 
 public function allArticle(){
