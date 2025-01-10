@@ -19,7 +19,7 @@
                             <?php
                             require_once '../classes/auteur.php';
                             $id_article=$_GET['id'];
-                            $auteur = new Auteur("", "", "", "", "", "");
+                            $auteur = new Auteur("", "", "", "", "", "","");
                             $auteur->showModifyArticle($id_article);
                             $result = $auteur->showModifyArticle($id_article);
                                           echo'  <div>

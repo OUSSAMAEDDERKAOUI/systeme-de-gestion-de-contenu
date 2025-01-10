@@ -81,7 +81,7 @@ class Commentaire {
 
     public function showComment($id_article){
 
-        $stmt=$this->database->getConnection()->prepare("SELECT commentaires.contenu,commentaires.date_soumission ,article.titre,users.nom,users.prenom
+        $stmt=$this->database->getConnection()->prepare("SELECT commentaires.contenu,commentaires.date_soumission ,article.titre,users.nom,users.prenom,users.image
                                                           FROM commentaires
                                                           JOIN article ON article.id_article=commentaires.id_article
                                                           JOIN users ON users.id_user=commentaires.id_membre

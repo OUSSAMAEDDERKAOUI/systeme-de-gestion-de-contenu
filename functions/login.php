@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         }else {
             echo'4';
 
-            $user = new Users("","","","","","");
+            $user = new Users("","","","","","","");
 
             $loggedInUser = $user->login( $postEmail, $postPassword);
 
@@ -41,6 +41,10 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                 $_SESSION['user_nom'] = $loggedInUser->getNom();
                 $_SESSION['user_email'] = $loggedInUser->getEmail();
                 $_SESSION['user_role'] = $loggedInUser->getRole();
+                $_SESSION['user_image'] = $loggedInUser->getimage();
+
+
+
 
 echo  $_SESSION['user_role'];
 

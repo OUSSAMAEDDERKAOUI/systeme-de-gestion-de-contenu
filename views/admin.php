@@ -77,7 +77,7 @@ else {
                                 <h3 class="text-gray-500 text-sm">Total Articles</h3>
                                 <?php
                                 require_once '../classes/admin.php';
-                                $admin = new Admin("", "", "", "", "", "");
+                                $admin = new Admin("", "", "", "", "", "","");
                                 $result = $admin->allArticle();
 
                                 echo ' <p class="text-2xl font-semibold text-gray-800">' . $result['nbr_article'] . '</p>
@@ -102,7 +102,7 @@ else {
                                     <h3 class="text-gray-500 text-sm"> Les Articles Rejeter</h3>
                                     <?php
                                     require_once '../classes/admin.php';
-                                    $admin = new Admin("", "", "", "", "", "");
+                                    $admin = new Admin("", "", "", "", "", "","");
                                     $result = $admin->rejectedArticle();
 
                                     echo ' <p class="text-2xl font-semibold text-gray-800">' . $result['nbr_article'] . '</p>'
@@ -127,7 +127,7 @@ else {
 
                                     <?php
                                     require_once '../classes/admin.php';
-                                    $admin = new Admin("", "", "", "", "", "");
+                                    $admin = new Admin("", "", "", "", "", "","");
                                     $result = $admin->confirmedArticle();
 
                                     echo ' <p class="text-2xl font-semibold text-gray-800">' . $result['nbr_article'] . '</p>'
@@ -150,7 +150,7 @@ else {
                                     <h3 class="text-gray-500 text-sm"> Les Articles En Attente</h3>
                                     <?php
                                     require_once '../classes/admin.php';
-                                    $admin = new Admin("", "", "", "", "", "");
+                                    $admin = new Admin("", "", "", "", "", "","");
                                     $result = $admin->PendingArticle();
 
                                     echo ' <p class="text-2xl font-semibold text-gray-800">' . $result['nbr_article'] . '</p>'
@@ -185,7 +185,7 @@ else {
                             <div class="space-y-4">
                                 <?php
                                 require_once '../classes/admin.php';
-                                $admin = new Admin("", "", "", "", "", "");
+                                $admin = new Admin("", "", "", "", "", "","");
                                 $rows = $admin->show_article();
                                 if ($rows) {
                                     foreach ($rows as $row) {
@@ -347,6 +347,11 @@ else {
         <!-- Liste des articles -->
         <div class="space-y-4">
             <!-- Article 1 -->
+
+
+
+
+            
             <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
                 <div class="flex justify-between items-start">
                     <div class="flex-1">
@@ -380,76 +385,7 @@ else {
                     </div>
                 </div>
             </div>
-
-            <!-- Article 2 -->
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-                <div class="flex justify-between items-start">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-4 mb-4">
-                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" 
-                                 alt="Author" 
-                                 class="w-12 h-12 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-slate-800">Marie Lefebvre</h3>
-                                <p class="text-sm text-slate-500">Soumis le 14 Mars 2024</p>
-                            </div>
-                        </div>
-                        <h4 class="text-xl font-semibold text-slate-900 mb-2">
-                            Introduction à l'Architecture Microservices
-                        </h4>
-                        <p class="text-slate-600 mb-4 line-clamp-2">
-                            Guide complet sur la conception et l'implémentation des microservices...
-                        </p>
-                        <div class="flex gap-2 mb-4">
-                            <span class="px-3 py-1 bg-orange-50 text-orange-600 rounded-full text-sm">Architecture</span>
-                            <span class="px-3 py-1 bg-teal-50 text-teal-600 rounded-full text-sm">Microservices</span>
-                        </div>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors">
-                            Approuver
-                        </button>
-                        <button class="px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors">
-                            Refuser
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Article 3 -->
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-                <div class="flex justify-between items-start">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-4 mb-4">
-                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" 
-                                 alt="Author" 
-                                 class="w-12 h-12 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-slate-800">Pierre Martin</h3>
-                                <p class="text-sm text-slate-500">Soumis le 13 Mars 2024</p>
-                            </div>
-                        </div>
-                        <h4 class="text-xl font-semibold text-slate-900 mb-2">
-                            Sécurité des Applications Web Modernes
-                        </h4>
-                        <p class="text-slate-600 mb-4 line-clamp-2">
-                            Découvrez les meilleures pratiques pour sécuriser vos applications web...
-                        </p>
-                        <div class="flex gap-2 mb-4">
-                            <span class="px-3 py-1 bg-red-50 text-red-600 rounded-full text-sm">Sécurité</span>
-                            <span class="px-3 py-1 bg-gray-50 text-gray-600 rounded-full text-sm">Web</span>
-                        </div>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors">
-                            Approuver
-                        </button>
-                        <button class="px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors">
-                            Refuser
-                        </button>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </section>
 
@@ -518,7 +454,7 @@ else {
                     <div class="space-y-4">
                         <?php
                         require_once '../classes/admin.php';
-                        $admin = new Admin("", "", "", "", "", "");
+                        $admin = new Admin("", "", "", "", "", "","");
                         $rows = $admin->showCategory();
                         if ($rows) {
                             foreach ($rows as $row) {
@@ -604,7 +540,7 @@ else {
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     <?php
                                     require_once '../classes/admin.php';
-                                    $admin = new Admin("", "", "", "", "", "");
+                                    $admin = new Admin("", "", "", "", "", "","");
                                     $rows = $admin->showAuteur();
                                     if ($rows) {
                                         foreach ($rows as $row) {

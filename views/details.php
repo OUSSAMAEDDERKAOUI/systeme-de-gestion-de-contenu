@@ -10,6 +10,7 @@ if (!isAuth('membre')) {
         header('Location: ../views/login.php');
     }
 }
+$image_user= $_SESSION['user_image'];
 
 
 ?>
@@ -48,9 +49,11 @@ if (!isAuth('membre')) {
                         <i class="fas fa-bell text-xl"></i>
                     </button>
                     <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+                        <?php
+                        echo'<img src="'. htmlspecialchars($image_user).'"
                             alt="Profile"
-                            class="h-10 w-10 rounded-full object-cover">
+                            class="h-10 w-10 rounded-full object-cover">';
+                            ?>
                         <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-400 border-2 border-white"></div>
 
                     </div>
@@ -138,7 +141,7 @@ if (!isAuth('membre')) {
 
                 require_once '../classes/membre.php';
 
-                $membre = new Membre("", "", "", "", "", "");
+                $membre = new Membre("", "", "", "", "", "","");
 
 
 
@@ -150,6 +153,7 @@ if (!isAuth('membre')) {
                     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
 
                         $image = $row['image'];
+                        $image_user=$row['image_user'];
                         echo '  <article class="bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeIn">
     <div class="relative">
         <img src="' . htmlspecialchars($image) . '" alt="" class="w-full h-96 object-cover">
@@ -167,7 +171,7 @@ if (!isAuth('membre')) {
                         echo ' <h1 class="text-4xl font-bold text-gray-900 mb-4">' . $row['articleTitre'] . '</h1>
         
         <div class="flex items-center gap-4 mb-6">
-            <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-12 h-12 rounded-full" alt="Author">
+            <img src="'.htmlspecialchars($image_user).'" class="w-12 h-12 rounded-full" alt="Author">
             <div>
                 <p class="font-semibold text-gray-900">' . ' ' . $row['nom'] . '  ' . $row['prenom'] . '  </p>
                 <p class="text-gray-500 text-sm">Publié le ' . $row['date_publication'] . '</p>
@@ -249,7 +253,7 @@ echo'</article> ';
                     foreach($rows as $row){
                         echo '<div class="bg-gray-50 p-6 rounded-lg">
                         <div class="flex items-center gap-4 mb-4">
-                            <img src="https://randomuser.me/api/portraits/men/46.jpg"
+                            <img src="'.$row['image'].'"
                                 class="w-10 h-10 rounded-full" alt="Commenter">
                             <div>
                                 <p class="font-semibold">'.$row['prenom'].' '.$row['nom'].'</p>

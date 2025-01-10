@@ -1,5 +1,5 @@
 <?php
-  require_once '../config/db.php' ;
+  require_once __DIR__.'/../config/db.php' ;
 
 class Users{ 
    protected $id_user ;
@@ -8,16 +8,19 @@ class Users{
    protected $email ;
    protected $password;
    protected $role;
+   protected $upload_img;
+
    protected $database;
 
-
-   public function __construct($id_user,$nom ,$prenom,$email,$password,$role){
+   public function __construct($id_user,$nom ,$prenom,$email,$password,$role,$upload_img){
     $this-> id_user =$id_user;
     $this->nom =$nom ;
     $this->prenom=$prenom;
     $this->email=$email;
     $this->password=$password ;
     $this->role=$role;
+    $this->upload_img=$upload_img;
+
     $this->database= new Database;
    }
 
@@ -40,6 +43,9 @@ class Users{
    public function getRole(){
     return $this->role ;
    }
+   public function getimage(){
+    return $this->upload_img ;
+   }
 
 
    public function setNom($nom){
@@ -53,6 +59,9 @@ class Users{
    }
    public function setPassword($password){
     $this->password=password_hash($password,PASSWORD_DEFAULT) ;
+   }
+   public function setUpload_img($upload_img){
+    $this->upload_img=$upload_img ;
    }
   
    public function login($postEmail , $postPassword){
@@ -75,7 +84,9 @@ class Users{
             $this->prenom=$result['prenom'];
             $this->email=$result['email'];
             $this->role=$result['role'];
-              return $this;
+            $this->upload_img=$result['image'];
+
+            return $this;
           }
       }
       }

@@ -4,12 +4,12 @@ require_once '../classes/user.php';
 
 class Membre extends Users
 {
-    private $upload_img ;
+//     private $upload_img ;
 
-public function __construct($id_user,$nom ,$prenom,$email,$password,$role,$upload_img){
-    $this->upload_img=$upload_img;
-    parent::__construct($id_user,$nom ,$prenom,$email,$password,$role);
-   }
+// public function __construct($id_user,$nom ,$prenom,$email,$password,$role,$upload_img){
+//     $this->upload_img=$upload_img;
+//     parent::__construct($id_user,$nom ,$prenom,$email,$password,$role);
+//    }
 
 
     public function signup($nom, $prenom, $email, $password, $role,$upload_img)
@@ -152,7 +152,7 @@ public function __construct($id_user,$nom ,$prenom,$email,$password,$role,$uploa
 
 
         $stmt = $this->database->getConnection()->prepare(
-            "SELECT  article.titre AS articleTitre, article.contenu, article.date_publication, article.statut, article.image ,categorie.titre AS categorieTitre ,article.id_article,users.nom,users.prenom
+            "SELECT  article.titre AS articleTitre, article.contenu, article.date_publication, article.statut, article.image,users.image AS image_user ,categorie.titre AS categorieTitre ,article.id_article,users.nom,users.prenom
                                                           FROM article 
                                                           JOIN users ON article.id_auteur=users.id_user
                                                           JOIN categorie on article.id_categorie=categorie.id_categorie 

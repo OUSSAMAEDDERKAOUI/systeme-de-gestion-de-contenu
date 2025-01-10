@@ -94,9 +94,7 @@ else {
                                 <i class="fas fa-bell text-xl"></i>
                             </button>
                             <div class="relative">
-                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
-                                    alt="Profile"
-                                    class="h-10 w-10 rounded-full object-cover">
+                               
                                 <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-400 border-2 border-white"></div>
                             </div>
                         </div>
@@ -113,7 +111,7 @@ else {
                                 <p class="text-sm text-gray-500 mb-1">Total Articles</p>
                                 <?php
                                 require_once '../classes/auteur.php';
-                                $auteur = new Auteur("", "", "", "", "", "");
+                                $auteur = new Auteur("", "", "", "", "", "","");
                                 $id_auteur = $_SESSION['user_id'];
                                 $result = $auteur->allArticle($id_auteur);
 
@@ -134,7 +132,7 @@ else {
                                 <p class="text-sm text-gray-500 mb-1">Articles Approuvés</p>
                                 <?php
                                 require_once '../classes/auteur.php';
-                                $auteur = new Auteur("", "", "", "", "", "");
+                                $auteur = new Auteur("", "", "", "", "", "","");
                                 $id_auteur = $_SESSION['user_id'];
                                 $result = $auteur->confirmedArticle($id_auteur);
 
@@ -154,7 +152,7 @@ else {
                                 <p class="text-sm text-gray-500 mb-1">En Attente</p>
                                 <?php
                                 require_once '../classes/auteur.php';
-                                $auteur = new Auteur("", "", "", "", "", "");
+                                $auteur = new Auteur("", "", "", "", "", "","");
                                 $id_auteur = $_SESSION['user_id'];
                                 $result = $auteur->rejectedArticle($id_auteur);
 

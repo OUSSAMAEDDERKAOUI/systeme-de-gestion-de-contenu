@@ -12,6 +12,9 @@ else {
 
 }
 }
+$image_user= $_SESSION['user_image'];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -43,9 +46,12 @@ else {
                         <i class="fas fa-bell text-xl"></i>
                     </button>
                     <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+                        <?php
+                        echo'<img src="'. htmlspecialchars($image_user).'"
+                    
                             alt="Profile"
-                            class="h-10 w-10 rounded-full object-cover">
+                            class="h-10 w-10 rounded-full object-cover">';
+                            ?>
                         <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-400 border-2 border-white"></div>
                     </div>
                     <a href="../functions/logout.php" class="flex items-center px-6 py-3 hover:bg-purple-700 transition-colors duration-200">
@@ -67,8 +73,9 @@ else {
                 </button>
                
                 <?php
+
                     require_once '../classes/admin.php';
-                    $admin = new Admin("", "", "", "", "", "");
+                    $admin = new Admin("", "", "", "", "", "","");
                     $rows = $admin->showCategory();
                     foreach ($rows as $row) {
                         $id_category = $row['id_categorie'];
@@ -89,7 +96,7 @@ else {
                 <?php
                     $id_user = $_SESSION['user_id'];
                     require_once '../classes/membre.php';
-                    $membre = new Membre("", "", "", "", "", "");
+                    $membre = new Membre("", "", "", "", "", "","");
                     
                     if (isset($_GET['id']) && !empty($_GET['id'])) {
                         $id = $_GET['id'];  
@@ -162,6 +169,8 @@ else {
                     <h3 class="text-2xl font-bold">MelodyHub</h3>
                     <p class="mt-2 text-gray-400">Votre passerelle vers la culture</p>
                 </div>
+
+
                 <div class="flex space-x-6">
                     <a href="#" class="text-gray-400 hover:text-gray-300">
                         <i class="fab fa-facebook text-xl"></i>

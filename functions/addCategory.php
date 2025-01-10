@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         } else {
             // echo'valid3';
 
-            $admin=new Admin("","","","","","");
+            $admin=new Admin("","","","","","","");
             // echo'valid4';
 
             $admin->addCategory($titre,$idAuteur);
