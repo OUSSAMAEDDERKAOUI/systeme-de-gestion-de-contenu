@@ -119,18 +119,34 @@ else {
                                         <span class="mx-2">•</span>
                                         <span>50 vues</span>
                                     </div>
-                                    <h3 class="text-xl font-bold text-gray-800 mb-2">' . htmlspecialchars($row['articleTitre']) . '</h3>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">' . htmlspecialchars($row['articleTitre']) . '</h3>';
 
-                                    <div class="flex items-center justify-between">
+    require_once '../classes/article_tag.php';
+                                $TagArticle=new TagArticle("","");
+                               $rows= $TagArticle->getTagsByArticle($id_article);
+                               if(count($rows) > 0){
+                                echo'<div class="flex  text-center gap-2 m-4 gap-2 m-4">';
+                                foreach($rows as $result){
+                                   echo' <div class="px-3 py-1  text-blue-600 rounded-full text-sm"># '.$result['nom_tag'].'</div>';
+                                }
+                                echo'</div>';
+
+                               }
+
+
+                                   echo' <div class="flex items-center justify-between">
                                         <span class="text-sm text-gray-600">Par ' . htmlspecialchars($row['nom']) . ' ' . htmlspecialchars($row['prenom']) . '</span>
                                         <a href="./details.php?id=' . htmlspecialchars($id_article) . '">
                                             <button class="text-purple-600 hover:text-purple-700">
                                                 Voir tout <i class="fas fa-arrow-right ml-1"></i>
                                             </button>
                                         </a>
+
                                     </div>
-                                </div>
-                            </article>';
+                                </div>';
+                            
+                        
+                            echo'</article>';
                         }
                     }
                 ?>

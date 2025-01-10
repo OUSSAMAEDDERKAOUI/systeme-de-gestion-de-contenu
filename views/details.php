@@ -159,8 +159,9 @@ if (!isAuth('membre')) {
         <div class="absolute top-0 right-0 m-2">
             <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">
               ' . $row['categorieTitre'] . ' </span>
-        </div>
-    </div>
+        </div>';
+      
+   echo' </div>
     <div class="p-6">';
                         echo '<div class="mb-8">';
                         echo ' <h1 class="text-4xl font-bold text-gray-900 mb-4">' . $row['articleTitre'] . '</h1>
@@ -175,17 +176,24 @@ if (!isAuth('membre')) {
     </div>
           <pre class="text-gray-800 mb-2 whitespace-pre-line">' . $row['contenu'] . '
         </pre>
-        <br>
-                <br>
-                        <br>
-
-
-
+        <br>';
+            require_once '../classes/article_tag.php';
+                $TagArticle=new TagArticle("","");
+               $results= $TagArticle->getTagsByArticle($id_article);
+               if(count($results) > 0){
+                echo'<div class="flex  text-center gap-2 m-4 ">';
+                foreach($results as $res){
+                   echo' <div class="px-3 py-1  text-blue-600 rounded-full text-sm"># '.$res['nom_tag'].'</div>';
+                }
+                echo'</div>';
+            }
       
-    </div>
-</article> ';
+   echo' </div>';
+     
+echo'</article> ';
                     }
                 }
+                
                 echo'<div class="m-4 flex items-center gap-2">
                 <a href="../functions/addLike.php?id='.$id_article.'">';
                 

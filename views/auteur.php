@@ -275,7 +275,12 @@ else {
                                 <div>
     <label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
     <?php
-    $rows = $auteur->showTag(); // Récupérer les tags
+
+
+// Récupérer les tags
+
+
+    $rows = $auteur->showTag(); 
     if ($rows) {
         foreach ($rows as $row) {
             $id_tag = $row['id_tag'];
