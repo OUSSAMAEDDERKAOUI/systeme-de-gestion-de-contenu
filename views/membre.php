@@ -121,7 +121,7 @@ else {
                                     </div>
                                     <h3 class="text-xl font-bold text-gray-800 mb-2">' . htmlspecialchars($row['articleTitre']) . '</h3>';
 
-    require_once '../classes/article_tag.php';
+                                  require_once '../classes/article_tag.php';
                                 $TagArticle=new TagArticle("","");
                                $rows= $TagArticle->getTagsByArticle($id_article);
                                if(count($rows) > 0){

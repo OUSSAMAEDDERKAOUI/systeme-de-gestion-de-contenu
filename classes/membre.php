@@ -4,12 +4,40 @@ require_once '../classes/user.php';
 
 class Membre extends Users
 {
+    private $upload_img ;
 
-    public function signup($nom, $prenom, $email, $password, $role)
+public function __construct($upload_img){
+    $this->upload_img=$upload_img;
+   }
+
+
+    public function signup($nom, $prenom, $email, $password, $role,$upload_img)
     {
 
-        if (empty($nom) || empty($prenom) || empty($email) || empty($password) || empty($role)) {
+        if (empty($nom) || empty($prenom) || empty($email) || empty($password) || empty($role)|| empty($upload_img) ) {
             echo "Tous les champs sont obligatoires";
+        }
+        if (isset($upload_img) && $upload_img['error'] === UPLOAD_ERR_OK) {
+            echo'text ok';
+            $permited = array('jpg', 'png', 'jpeg', 'gif');
+            $file_name = $upload_img['name'];
+            $file_size = $upload_img['size'];
+            $file_temp = $upload_img['tmp_name'];
+            $div = explode('.', $file_name);
+            $file_ext = strtolower(end($div));
+            
+            if (in_array($file_ext, $permited) === false) {
+                throw new Exception("Format d'image non autorisé. Autorisé : " . implode(', ', $permited));
+            }
+            
+            $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
+            $this->upload_img = "../upload/" . $unique_image;
+            
+            if (!move_uploaded_file($file_temp, $this->upload_img)) {
+                throw new Exception("Échec du téléchargement de l'image.");
+            }
+        } else {
+            throw new Exception("Aucune image à télécharger ou une erreur est survenue.");
         }
 
 
@@ -23,8 +51,8 @@ class Membre extends Users
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            $query = "INSERT INTO `users`( `nom`, `prenom`, `email`, `password`, `role`) 
-                   VALUES (:nom,:prenom,:email,:password,:role)";
+            $query = "INSERT INTO `users`( `nom`, `prenom`, `email`, `password`, `role`,`image`) 
+                   VALUES (:nom,:prenom,:email,:password,:role,:upload_img)";
 
             $stmt = $this->database->getConnection()->prepare($query);
 
@@ -34,6 +62,8 @@ class Membre extends Users
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
             $stmt->bindParam(':role', $role, PDO::PARAM_STR);
+            $stmt->bindValue(':upload_img', $this->upload_img, PDO::PARAM_STR); 
+
             try {
                 $stmt->execute();
             } catch (PDOException $e) {;

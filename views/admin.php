@@ -180,7 +180,7 @@ else {
         </div>
     </div>
                         <!-- Articles en Attente -->
-                        <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="bg-white rounded-lg shadow-md p-6 ">
                             <h3 class="text-lg font-bold bold mb-4 text-gray-900"></h3>
                             <div class="space-y-4">
                                 <?php
@@ -190,7 +190,7 @@ else {
                                 if ($rows) {
                                     foreach ($rows as $row) {
                                         $id_article = $row['id_article'];
-                                        echo ' <div class="flex items-center justify-between border-b pb-2">
+                                        echo ' <div class="flex flex-column items-center justify-between border-b pb-2">
                                 <div>
                                     <h4 class="font-medium">' . $row['titreArticle'] . '</h4>
                                     <p class="text-sm text-gray-500">
@@ -200,6 +200,18 @@ else {
                                         
                                     </p>
                                 </div>';
+                                require_once '../classes/article_tag.php';
+                                $TagArticle=new TagArticle("","");
+                               $rows= $TagArticle->getTagsByArticle($id_article);
+                               if(count($rows) > 0){
+                                echo'<div class="flex  text-center gap-2 m-4 gap-2 m-4">';
+                                foreach($rows as $result){
+                                   echo' <div class="px-3 py-1  text-blue-600 rounded-full text-sm"># '.$result['nom_tag'].'</div>';
+                                }
+                                echo'</div>';
+
+                               }
+
 
                                         echo ' <div class="flex space-x-2">
                               <a href="../functions/approuveArticle.php?id=' . htmlspecialchars($id_article) . '">
